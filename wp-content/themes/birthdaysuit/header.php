@@ -7,7 +7,7 @@
 
 <link href="https://use.typekit.net/sqm7elp.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/68698/7804572/css/fonts.css" /> 
-<link href="<?php echo $_ENV['ASSET_HOST'] ?>assets/main.css" rel="stylesheet" type="text/css">
+<link href="//<?php echo $_ENV['ASSET_HOST'] ?>/assets/main.css" rel="stylesheet" type="text/css">
 
 <?php wp_head(); ?>
 </head>

@@ -9,7 +9,7 @@ services:
       - 8080:80
     environment:
       WORDPRESS_DB_PASSWORD: example
-      ASSET_HOST: "http://localhost:9000/"
+      ASSET_HOST: "${ASSET_HOST}"
     volumes:
       - "./wp-content/themes/birthdaysuit:/var/www/html/wp-content/themes/birthdaysuit"
     #   - "./wp-config.php:/var/www/html/wp-config.php"
@@ -28,7 +28,5 @@ services:
     working_dir: "/app"
     command:
       - "/app/node_modules/.bin/webpack-dev-server"
-      - --host
-      - "0.0.0.0"
       - --inline
       - --hot

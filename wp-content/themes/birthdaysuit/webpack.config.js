@@ -86,6 +86,9 @@ module.exports = {
     contentBase,
     headers: { 'Access-Control-Allow-Origin': '*' },
     historyApiFallback: true,
+    allowedHosts: [
+      '.demaree.me',
+    ],
     watchOptions: {
       ignored: /node_modules/,
       poll: 1000,

@@ -52,15 +52,11 @@ body:before {
 .site-header {
   grid-column-start: 1;
   grid-column-end: span var(--sidebar-span);
-  grid-row-start: 1;
-  grid-row-end: 3;
 }
 
 .main-content {
   grid-column-start: calc((var(--cols) + 1) - var(--main-span)) ;
   grid-column-end: calc(var(--cols) + 1);
-  grid-row-start: 2;
-  grid-row-end: 3;
 }
 
 a:any-link {

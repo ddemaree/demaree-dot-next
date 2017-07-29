@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+:root {
+  --cols: 12;
+  --outer-padding: 8%;
+  --gutter: 3rem;
+  --sidebar-span: 4;
+  --main-span: 8;
+  --container-width: calc(100% - (var(--outer-padding) * 2));
+  --griddable-width: calc(var(--container-width) - ((var(--cols) - 1) * var(--gutter)));
+  --sidebar-percentage: calc(var(--sidebar-span) / var(--cols));
+  --sidebar-width: calc(var(--griddable-width) * var(--sidebar-percentage));
+  --fg-color: #000;
+  --fauxcol-spread: var(--gutter);
+}
+
+:root {
+  --fg-color: #000;
+  --border-color: #ccc;
+}
+
+* {
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+body {
+  font-family: 'acumin-pro', --apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI', sans-serif;
+  padding: calc(var(--gutter) * 1) var(--outer-padding);
+}
+
+body:before {
+  content: '';
+  display: block;
+  background-color: #f4f4f4;
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: calc(var(--sidebar-width) + var(--outer-padding) + (var(--gutter) * (var(--sidebar-span) - 1) ));
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  grid-template-rows: auto auto auto;
+  grid-column-gap: var(--gutter);
+  grid-row-gap: var(--gutter);
+}
+
+.site-header {
+  grid-column-start: 1;
+  grid-column-end: span var(--sidebar-span);
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.main-content {
+  grid-column-start: calc((var(--cols) + 1) - var(--main-span)) ;
+  grid-column-end: calc(var(--cols) + 1);
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+a:any-link {
+  color: inherit;
+}
+
+article {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+article *:last-child {
+  margin-bottom: 0;
+}
+
+.site-header h1,
+.site-header h2 {
+  margin: 0;
+}
+
+@media (max-width: 1000px) {
+  :root {
+    --gutter: 1.5rem;
+    --outer-padding: var(--gutter);
+  }
+}
+
+@media (max-width: 800px) {
+  :root {
+    --cols: 1;
+    --main-span: 1;
+    --sidebar-span: 1;
+    --gutter: 1rem;
+  }
+  body:before {
+    display: none;
+  }
+}

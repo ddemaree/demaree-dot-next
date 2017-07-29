@@ -1,0 +1,34 @@
+version: '3.1'
+services:
+
+  wordpress:
+    depends_on:
+      - mysql
+    image: wordpress
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_PASSWORD: example
+      ASSET_HOST: "http://localhost:9000/"
+    volumes:
+      - "./wp-content/themes:/var/www/html/wp-content/themes"
+    #   - "./wp-config.php:/var/www/html/wp-config.php"
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+  assets:
+    build: "./wp-content/themes/birthdaysuit"
+    ports:
+      - 9000:9000
+    volumes:
+      - "./wp-content/themes/birthdaysuit:/app"
+    working_dir: "/app"
+    command:
+      - "/app/node_modules/.bin/webpack-dev-server"
+      - --host
+      - "0.0.0.0"
+      - --inline
+      - --hot

@@ -12,6 +12,7 @@ services:
       ASSET_HOST: "${ASSET_HOST}"
     volumes:
       - "./wp-content/themes/birthdaysuit:/var/www/html/wp-content/themes/birthdaysuit"
+      - "./wp-content/plugins:/var/www/html/wp-content/plugins"
     #   - "./wp-config.php:/var/www/html/wp-config.php"
 
   mysql:

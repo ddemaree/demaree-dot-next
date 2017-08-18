@@ -1,0 +1,25 @@
+{
+  "name": "dd-frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^7.1.2",
+    "axios": "^0.16.2",
+    "babel-plugin-module-resolver": "^2.7.1",
+    "babel-plugin-wrap-in-js": "^1.1.1",
+    "express": "^4.15.4",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "lodash": "^4.17.4",
+    "next": "^3.0.3",
+    "postcss-easy-import": "^2.1.0",
+    "postcss-loader": "^2.0.6",
+    "raw-loader": "^0.5.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "sass-loader": "^6.0.6"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

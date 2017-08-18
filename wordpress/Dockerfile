@@ -16,6 +16,11 @@ RUN curl -o gutenberg.zip -SL https://downloads.wordpress.org/plugin/gutenberg.z
       && unzip gutenberg.zip -d /usr/src/wordpress/wp-content/plugins/ \
       && rm gutenberg.zip
 
+RUN curl -o wordpress-importer.zip -SL https://downloads.wordpress.org/plugin/wordpress-importer.zip \
+      && unzip wordpress-importer.zip -d /usr/src/wordpress/wp-content/plugins/ \
+      && rm wordpress-importer.zip
+
 COPY ./themes/birthdaysuit /usr/src/wordpress/wp-content/themes/birthdaysuit
+COPY ./wp-config.php /usr/src/wordpress/wp-config.php
 
 WORKDIR /var/www/html

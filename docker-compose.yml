@@ -2,32 +2,41 @@ version: '3.1'
 services:
 
   wordpress:
-    depends_on:
+    links:
       - mysql
-    image: wordpress
+    build:
+      context: ./wordpress
+    image: dkr.demar.ee/dd-wordpress
     ports:
       - 8080:80
     environment:
       WORDPRESS_DB_PASSWORD: example
       ASSET_HOST: "${ASSET_HOST}"
-    volumes:
-      - "./wp-content/themes/birthdaysuit:/var/www/html/wp-content/themes/birthdaysuit"
-      - "./wp-content/plugins:/var/www/html/wp-content/plugins"
-    #   - "./wp-config.php:/var/www/html/wp-config.php"
 
   mysql:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: example
 
-  assets:
-    build: "./wp-content/themes/birthdaysuit"
+  frontend:
+    links:
+      - wordpress
+    build: "./frontend"
     ports:
-      - 9000:9000
+      - 3000:3000
+    environment:
+      POSTS_API: "http://wordpress"
     volumes:
-      - "./wp-content/themes/birthdaysuit:/app"
-    working_dir: "/app"
-    command:
-      - "/app/node_modules/.bin/webpack-dev-server"
-      - --inline
-      - --hot
+      - "./frontend:/home/nodejs/app"
+
+  # assets:
+  #   build: "./wordpress/wp-content/themes/birthdaysuit"
+  #   ports:
+  #     - 9000:9000
+  #   volumes:
+  #     - "./wordpress/wp-content/themes/birthdaysuit:/app"
+  #   working_dir: "/app"
+  #   command:
+  #     - "/app/node_modules/.bin/webpack-dev-server"
+  #     - --inline
+  #     - --hot

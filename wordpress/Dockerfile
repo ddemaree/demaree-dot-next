@@ -16,6 +16,6 @@ RUN curl -o gutenberg.zip -SL https://downloads.wordpress.org/plugin/gutenberg.z
       && unzip gutenberg.zip -d /usr/src/wordpress/wp-content/plugins/ \
       && rm gutenberg.zip
 
-COPY ./wp-content/themes/birthdaysuit /usr/src/wordpress/wp-content/themes/birthdaysuit
+COPY ./themes/birthdaysuit /usr/src/wordpress/wp-content/themes/birthdaysuit
 
 WORKDIR /var/www/html

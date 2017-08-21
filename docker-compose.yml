@@ -19,24 +19,10 @@ services:
       MYSQL_ROOT_PASSWORD: example
 
   frontend:
-    links:
-      - wordpress
     build: "./frontend"
     ports:
       - 3000:3000
     environment:
-      POSTS_API: "http://wordpress"
+      POSTS_API: "https://wp.demar.ee"
     volumes:
       - "./frontend:/home/nodejs/app"
-
-  # assets:
-  #   build: "./wordpress/wp-content/themes/birthdaysuit"
-  #   ports:
-  #     - 9000:9000
-  #   volumes:
-  #     - "./wordpress/wp-content/themes/birthdaysuit:/app"
-  #   working_dir: "/app"
-  #   command:
-  #     - "/app/node_modules/.bin/webpack-dev-server"
-  #     - --inline
-  #     - --hot

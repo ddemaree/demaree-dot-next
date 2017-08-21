@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 
 const postsApi = axios.create({
   baseURL: `${process.env.POSTS_API}/wp-json/wp/v2`
@@ -10,11 +11,30 @@ const wpPostToGoodJson = (post) => {
     title: post.title.rendered,
     content: post.content.rendered,
     format: (post.format || "standard"),
-    slug: (post.slug || "no-slug")
+    slug: (post.slug || "no-slug"),
+    date: post.date_gmt
   }
 }
 
 export default class PostsAPI {
+  static async getPostBySlug(id) {
+    return postsApi.get('/posts', {
+      params: { slug: id }
+    })
+    .then(response => {
+      let posts = response.data.map(wpPostToGoodJson);
+
+      return {
+        slug: id,
+        posts,
+        thisPost: posts[0]
+      }
+    })
+    .catch(err => {
+      console.trace(err);
+    })
+  }
+
   static async getPosts({ page, per_page }){
     return postsApi.get('/posts', {
       params: { page, per_page }

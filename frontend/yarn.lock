@@ -2350,6 +2350,12 @@ make-dir@^1.0.0:
   dependencies:
     pify "^2.3.0"
 
+match-words@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/match-words/-/match-words-0.1.1.tgz#dcd3119e74a6a67be4304ca5cf926580e8e1a7af"
+  dependencies:
+    word-regex "^0.1.0"
+
 maximatch@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/maximatch/-/maximatch-0.1.0.tgz#86cd8d6b04c9f307c05a6b9419906d0360fb13a2"
@@ -3852,6 +3858,16 @@ wide-align@^1.1.0:
 window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
+
+word-regex@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/word-regex/-/word-regex-0.1.2.tgz#a3bc7f2d222ce4a93c246c3ef69458f61f511639"
+
+wordcount@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/wordcount/-/wordcount-1.1.1.tgz#e72da7833904d870a154c9ef47ed5f3e7997cf57"
+  dependencies:
+    match-words "^0.1.0"
 
 wordwrap@0.0.2:
   version "0.0.2"

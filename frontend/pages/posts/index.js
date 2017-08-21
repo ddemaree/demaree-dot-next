@@ -11,7 +11,6 @@ export default class extends React.Component {
   }
   
   render() {
-    console.log(this.props);
     let { posts } = this.props;
     let postTags = posts.map(post => { return (
       <BlogPost post={post} />

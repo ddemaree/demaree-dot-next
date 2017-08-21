@@ -15,3 +15,9 @@ Long term home for posts and post archives. Right now basically identical to the
 ### `/posts/show.js`
 
 Single post view.
+
+## Some notes on CSS
+
+I'm using `styled-jsx` to attach and scope CSS to my components and pages, in part because it's bundled with Next and using it is the path of least resistance. (Another benefit is that I get hot reloading for CSS changes, which is quite _hot_.)
+
+The `PageLayout` component is responsible for document-level markup and CSS. There, you'll find a global stylesheet that implements an underlying layout based on CSS Grid, custom properties (aka native CSS variables), and the `calc()` function. No CSS preprocessors were harmed in the making of this web site.

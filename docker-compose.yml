@@ -8,20 +8,4 @@ services:
       PORT: 4000
       POSTS_API: "https://wp.demar.ee"
     volumes:
-      - "${ROOT_PATH}/frontend:/home/nodejs/app"
-
-  wordpress:
-    links:
-      - mysql
-    build:
-      context: ./wordpress
-    image: dkr.demar.ee/dd-wordpress
-    ports:
-      - 8080:80
-    environment:
-      WORDPRESS_DB_PASSWORD: example
-
-  mysql:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: example
+      - "./frontend:/home/nodejs/app"

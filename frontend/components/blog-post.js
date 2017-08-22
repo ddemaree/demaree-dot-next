@@ -47,7 +47,7 @@ export default ({post}) => {
         margin: 0;
       }
       `}</style>
-      {/* These styles must be globaled because we can't predict the JSX ID of the containing element */}
+      {/* These styles must be globaled because one can't predict the JSX ID of the containing element */}
       <style jsx global>{`
         .post-content blockquote {
           border-left: 4px solid #eee;

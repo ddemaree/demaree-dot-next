@@ -9,5 +9,11 @@ module.exports = {
     config.plugins.push(defines);
 
     return config
+  },
+  webpackDevMiddleware: (config) => {
+    const { watchOptions } = config;
+    const newWatchOptions = { ...watchOptions, poll: true }
+    const newConfig = { ...config, watchOptions: newWatchOptions } 
+    return newConfig;
   }
 }

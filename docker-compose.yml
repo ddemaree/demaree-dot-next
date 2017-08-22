@@ -1,5 +1,14 @@
 version: '3.1'
 services:
+  frontend:
+    build: "./frontend"
+    ports:
+      - 4000:4000
+    environment:
+      PORT: 4000
+      POSTS_API: "https://wp.demar.ee"
+    volumes:
+      - "${ROOT_PATH}/frontend:/home/nodejs/app"
 
   wordpress:
     links:
@@ -16,12 +25,3 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: example
-
-  frontend:
-    build: "./frontend"
-    ports:
-      - 3000:3000
-    environment:
-      POSTS_API: "https://wp.demar.ee"
-    volumes:
-      - "./frontend:/home/nodejs/app"

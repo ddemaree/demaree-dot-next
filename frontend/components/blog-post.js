@@ -11,14 +11,12 @@ export default ({post}) => {
     content = (
       <div>
         <div className="post-content" dangerouslySetInnerHTML={{__html: post.content}} />
-        <PostFooter post={post} />
       </div>
     );
   } else {
     content = (
       <div>
         <PostHeader slug={slug} title={title} />
-        <PostFooter post={post} />
         <div className="post-content" dangerouslySetInnerHTML={{__html: post.content}} />
       </div>
     );
@@ -27,6 +25,8 @@ export default ({post}) => {
   return (
     <div className={classNames}>
       {content}      
+      <PostFooter post={post} />
+
       <style jsx>{`
       .blog-post {
         margin: 2em 0;

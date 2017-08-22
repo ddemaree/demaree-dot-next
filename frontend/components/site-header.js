@@ -11,6 +11,10 @@ export default () => (
     </nav>
 
     <style jsx>{`
+    .site-header {
+      padding-right: 2em;
+      --border-color: rgba(0,0,0,0.1);
+    }
     h1, h2, h3 {
       font-size: inherit;
       font-weight: normal;
@@ -18,6 +22,20 @@ export default () => (
     }
     h1 {
       font-weight: 600;
+    }
+
+    nav {
+      margin-top: 2em;
+      border-top: 1px solid var(--border-color);
+    }
+    nav a {
+      display: block;
+      padding: 0.5em 0;
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-color);
+    }
+    nav a:hover {
+      background-color: var(--border-color);
     }
     `}</style>
   </div>

@@ -18,7 +18,6 @@ export default ({ title, children }) => {
       <Head>
         <title>{pageTitle}</title>
         <link href="https://use.typekit.net/sqm7elp.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/68698/7804572/css/fonts.css" /> 
       </Head>
 
       <SiteHeader />
@@ -29,11 +28,12 @@ export default ({ title, children }) => {
 
       <style jsx global>{`
         :root {
-          --cols: 12;
+          --cols: 16;
           --gutter: 2rem;
-          --sidebar-span: 4;
-          --mainbar-span: 8;
-          --outer-padding: 8%;
+          --sidebar-span: 5;
+          --mainbar-span: 9;
+          --mainbar-offset: 1;
+          --outer-padding: 4%;
 
           /* Width of body/container is viewport minus outer padding */
           --container-width: calc(100% - (var(--outer-padding) * 2));
@@ -48,6 +48,7 @@ export default ({ title, children }) => {
             (var(--column-width) * var(--sidebar-span)) + (var(--gutter) * (var(--sidebar-span) - 1)) + var(--outer-padding)
           );
         }
+
         * {
           box-sizing: border-box;
         }
@@ -78,14 +79,15 @@ export default ({ title, children }) => {
           left: 0;
           bottom: 0;
           width: var(--fc-width);
-          background-color: #00f1;
+          background-color: #f5f5f5;
+          z-index: -1;
         }
         .site-header {
           grid-column-start: 0;
           grid-column-end: span var(--sidebar-span);
         }
         .site-content {
-          grid-column-start: calc(var(--sidebar-span) + 1);
+          grid-column-start: calc(var(--sidebar-span) + var(--mainbar-offset) + 1);
           grid-column-end: span var(--mainbar-span);
         }
         h1, h2, h3, h4 {
@@ -99,6 +101,29 @@ export default ({ title, children }) => {
         }
         h3, h4 {
           font-size: 1em;
+        }
+
+        @media (min-width: 1200px) {
+          html {
+            font-size: 18px; 
+          }
+        }
+
+        @media (max-width: 900px) {
+          :root {
+            --outer-padding: 2rem;
+            --mainbar-offset: 0;
+            --mainbar-span: 11;
+            --sidebar-span: 5;
+          }
+        }
+        @media (max-width: 700px) {
+          body:before {
+            display: none;
+          }
+          .container {
+            display: block;
+          }
         }
       `}</style>
     </div>

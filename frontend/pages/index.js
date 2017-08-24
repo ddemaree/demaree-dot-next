@@ -10,13 +10,22 @@ export default class extends React.Component {
   }
   
   render() {
-    let { posts } = this.props;
+    let errorTag;
+    let { posts, error } = this.props;
     let postTags = posts.map(post => { return (
       <BlogPost post={post} key={`index-post-${post.slug}`} />
     ) })
 
+    if(error) {
+      console.log(error);
+      errorTag = (
+        <div className="error-msg">THERE WAS AN ERROR { error.message }</div>
+      );
+    }
+
     return (
       <PageLayout>
+        {errorTag}
         {postTags}
       </PageLayout>
     )

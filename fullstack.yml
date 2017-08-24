@@ -7,7 +7,7 @@ services:
     ports:
       - 4000:4000
     environment:
-      POSTS_API: "http://wordpress"
+      POSTS_API: "http://wordpress.error"
 
   wordpress:
     links:

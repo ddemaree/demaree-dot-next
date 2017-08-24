@@ -10,10 +10,10 @@ module.exports = {
 
     return config
   },
-  // webpackDevMiddleware: (config) => {
-  //   const { watchOptions } = config;
-  //   const newWatchOptions = { ...watchOptions, poll: true }
-  //   const newConfig = { ...config, watchOptions: newWatchOptions } 
-  //   return newConfig;
-  // }
+  webpackDevMiddleware: (config) => {
+    const { watchOptions } = config;
+    const newWatchOptions = Object.assign({}, watchOptions, {poll: true});
+    const newConfig = Object.assign({}, config, {watchOptions: newWatchOptions});
+    return newConfig;
+  }
 }

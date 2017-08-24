@@ -52,11 +52,18 @@ export default class PostsAPI {
       }
     })
     .catch(err => {
+      console.log(err);
+      let { message, request } = err;
+      let { status } = request;
+
       return {
         posts: [],
         totalPosts: 0,
         totalPages: 0,
-        error: ""
+        error: {
+          message,
+          status
+        }
       }
     })
   }

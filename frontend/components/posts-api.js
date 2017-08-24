@@ -12,7 +12,9 @@ const wpPostToGoodJson = (post) => {
     content: post.content.rendered,
     format: (post.format || "standard"),
     slug: (post.slug || "no-slug"),
-    date: post.date_gmt
+    date: post.date_gmt,
+    link_url: post.link_url,
+    _post: {...post}
   }
 }
 

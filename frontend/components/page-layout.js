@@ -58,9 +58,22 @@ export default ({ title, children }) => {
         body {
           font-family: 'acumin-pro', --apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI', sans-serif;
         }
-        a:link, a:visited {
+
+        a:link {
+          border-style: none none solid none;
+          border-width: 0 0 1px 0;
+          border-color: #ccc;
+          color: inherit;
+          text-decoration: none;
+        }
+        a:visited {
+          border-style: none none dotted none;
           color: inherit;
         }
+        a:hover {
+          background-color: #e5e5e5;
+        }
+
         .container {
           display: grid;
           grid-column-gap: var(--gutter);
@@ -79,8 +92,10 @@ export default ({ title, children }) => {
           left: 0;
           bottom: 0;
           width: var(--fc-width);
-          background-color: #f5f5f5;
+          background-color: #fff;
           z-index: -1;
+          {/* border-right: 1px solid #e0e0e0; */}
+          box-shadow: 0 0 20px #eee, inset -1px 0 0 #fff;
         }
         .site-header {
           grid-column-start: 0;
@@ -104,25 +119,38 @@ export default ({ title, children }) => {
         }
 
         @media (min-width: 1200px) {
-          html {
-            font-size: 18px; 
+          :root {
+            --outer-padding: 8%;
           }
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
           :root {
             --outer-padding: 2rem;
-            --mainbar-offset: 0;
-            --mainbar-span: 11;
-            --sidebar-span: 5;
+            --mainbar-offset: 1;
+            --mainbar-span: 10;
+            --sidebar-span: 4;
           }
         }
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
+          :root {
+            --outer-padding: 0;
+          }
+          html {
+            padding: 0;
+          }
           body:before {
             display: none;
           }
           .container {
             display: block;
+          }
+          .site-header, .site-content {
+            padding: 2em 9%;
+          }
+          .site-header {
+            box-shadow: 0 0 8px #ccc;
+            background: #fff;
           }
         }
       `}</style>

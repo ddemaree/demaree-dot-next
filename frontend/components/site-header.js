@@ -3,8 +3,8 @@ import Link from 'next/link'
 export default () => (
   <div className="site-header">
     <h1>David Demaree</h1>
-    <h2>Maker of interwebs and fine software</h2>
-    <h3>New York City*, USA</h3>
+    <h2 data-thing="hide">Maker of interwebs and fine software</h2>
+    <h3 data-thing="hide">New York City*, USA</h3>
 
     <nav>
     <Link href="/"><a>🏡 Home</a></Link>
@@ -37,6 +37,11 @@ export default () => (
     }
     nav a:hover {
       background-color: var(--border-color);
+    }
+    @media (max-width: 800px) {
+      nav {
+        display: none;
+      }
     }
     `}</style>
   </div>

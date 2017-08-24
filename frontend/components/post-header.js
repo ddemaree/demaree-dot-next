@@ -5,5 +5,14 @@ export default ({slug, title}) => (
     <Link href={{pathname: "/posts/show", query: {id: slug}}}>
       <a dangerouslySetInnerHTML={{__html: title}} />
     </Link>
+    <style jsx>{`
+      .post__header {
+        font-weight: 300;
+        font-size: 2em;
+      }
+      a {
+        border: 0;
+      }
+    `}</style>
   </h1>
 );

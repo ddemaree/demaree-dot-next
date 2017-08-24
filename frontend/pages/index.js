@@ -6,7 +6,7 @@ import PageLayout from 'components/page-layout'
 
 export default class extends React.Component {
   static async getInitialProps({req}){
-    return await PostsAPI.getPosts({page: 1, per_page: 5});
+    return await PostsAPI.getPosts({page: 1, per_page: 10});
   }
   
   render() {

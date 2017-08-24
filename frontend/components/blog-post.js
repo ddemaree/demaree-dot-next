@@ -9,11 +9,60 @@ export default ({post}) => {
   
   if(format == 'quote'){
     content = (
-      <div>
+      <div className="quote-body">
         <div className="post-content" dangerouslySetInnerHTML={{__html: post.content}} />
+
+        <style jsx>{`
+          .post-content :global(blockquote) {
+            font-size: 1.75em;
+            line-height: 1.25;
+            font-weight: 300;
+            border: none;
+            letter-spacing: -0.5px;
+            border-radius: 0.25em;
+            margin: 0 0 0.25em;
+            padding: 0 1em;
+            color: #000;
+          }
+
+          .post-content:before {
+            content: '“';
+            display: block;
+            position: absolute;
+            font-size: 3em;
+            line-height: 0.5em;
+            margin-top: 0.25em;
+            color: #ccc;
+          }
+
+          .quote-body :global(blockquote + p),
+          .post-content :global(.quote-source) {
+            padding-left: 1.75em;
+          }
+        `}</style>
       </div>
+      
     );
-  } else {
+  }
+  else if(format == 'link') {
+    content = (
+      <div>
+        <h2 className="link-header">
+          <a className="external" rel="external" href={post.link_url}>{title}</a>
+        </h2>
+        <div className="post-content" dangerouslySetInnerHTML={{__html: post.content}} />
+        <style jsx global>{`
+        .link-header {
+          font-size: inherit;  
+        }
+        .link-header .external:after {
+          content: '→';
+        }
+        `}</style>
+      </div>
+    )
+  }
+  else {
     content = (
       <div>
         <PostHeader slug={slug} title={title} />
@@ -24,8 +73,9 @@ export default ({post}) => {
 
   return (
     <div className={classNames}>
-      {content}      
       <PostFooter post={post} />
+
+      {content}      
 
       <style jsx>{`
       .blog-post {
@@ -54,7 +104,14 @@ export default ({post}) => {
           padding: 0 1.5em;
           margin: 1em 0;
           color: #666;
-        }  
+        }
+
+        blockquote *:first-child {
+          margin-top: 0;
+        }
+        blockquote *:last-child {
+          margin-bottom: 0;
+        }
       `}</style>
     </div>
   )

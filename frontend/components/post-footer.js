@@ -9,7 +9,6 @@ export default ({ post }) => {
   return (
     <div className="post__footer">
       <time className="post__date_gmt">
-        <span>Posted </span>
         <Link href={{pathname: "/posts/show", query: {id: post.slug}}}>
           <a>{ formattedDate }</a>
         </Link>
@@ -17,11 +16,20 @@ export default ({ post }) => {
 
       <style jsx>{`
       .post__footer {
-        color: #ccc;
+        color: #999;
+        font-size: 0.875em;
+        margin-bottom: 1em;
+        text-transform: uppercase;
+      }
+      .post__footer a {
+        border: 0;
       }
       time {
         font-weight: 600;
-      }  
+      }
+      .permalink {
+        color: #c60;
+      }
       `}</style>
     </div>
   )

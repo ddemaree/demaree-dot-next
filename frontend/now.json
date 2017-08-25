@@ -1,0 +1,10 @@
+{
+  "env": {
+    "POSTS_API": "https://wp.demar.ee"
+  },
+  "type": "npm",
+  "public": true,
+  "alias": [
+    "dd-next"
+  ]
+}

@@ -21,7 +21,7 @@
     "wordcount": "^1.1.1"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "next start",
     "dev": "node index.js",
     "build": "next build"
   }

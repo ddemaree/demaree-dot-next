@@ -18,6 +18,7 @@ export default ({ title, children }) => {
       <Head>
         <title>{pageTitle}</title>
         <link href="https://use.typekit.net/sqm7elp.css" rel="stylesheet" type="text/css" />
+        <meta name="viewport" content="width=device-width" />
       </Head>
 
       <SiteHeader />

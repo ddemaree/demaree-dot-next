@@ -7,7 +7,10 @@ services:
     ports:
       - 4000:4000
     environment:
-      POSTS_API: "http://wordpress.error"
+      PORT: 4000
+      POSTS_API: "http://wordpress"
+    volumes:
+      - "./frontend:/home/nodejs/app"
 
   wordpress:
     links:

@@ -16,7 +16,7 @@ export default class extends React.Component {
 
     return (
       <PageLayout title={thisPost.title}>
-        <BlogPost post={thisPost} />
+        <BlogPost post={thisPost} context="detail" />
       </PageLayout>
     )
   }

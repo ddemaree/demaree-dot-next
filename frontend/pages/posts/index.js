@@ -1,6 +1,8 @@
 import React from 'react'
-import PostsAPI from '../../components/posts-api'
-import BlogPost from '../../components/blog-post'
+import Head from 'next/head'
+import PostsAPI from 'components/posts-api'
+import PageLayout from 'components/page-layout'
+import BlogListing from 'components/blog-listing'
 
 export default class extends React.Component {
   static async getInitialProps({query, req}){
@@ -11,19 +13,12 @@ export default class extends React.Component {
   }
   
   render() {
-    let { posts } = this.props;
-    let postTags = posts.map(post => { return (
-      <BlogPost post={post} />
-    ) })
+    let { posts, error, page, total_posts, total_pages } = this.props;
 
     return (
-      <div>
-        <h1>This is David's ridiculous website.</h1>
-        <p>
-          Showing 10 of {this.props.totalPosts} posts
-        </p>
-        {postTags}
-      </div>
+      <PageLayout>
+        <BlogListing posts={posts} error={error} page={page} total_pages={total_pages} />
+      </PageLayout>
     )
   }
 }

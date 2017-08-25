@@ -37,24 +37,26 @@ export default class PostsAPI {
     })
   }
 
-  static async getPosts({ page, per_page }){
+  static async getPosts({ page = 1, per_page = 10 }){
     return postsApi.get('/posts', {
       params: { page, per_page }
     })
     .then(response => {
       let posts = response.data;
-      let totalPosts = response.headers['x-wp-total'];
-      let totalPages = response.headers['x-wp-totalpages'];
+      let total_posts = parseInt(response.headers['x-wp-total'])
+      let total_pages = parseInt(response.headers['x-wp-totalpages'])
       return {
         posts: posts.map(wpPostToGoodJson),
-        totalPosts,
-        totalPages
+        total_posts,
+        total_pages,
+        page,
+        per_page
       }
     })
     .catch(err => {
       console.log(err);
       let { message, request } = err;
-      let { status } = request;
+      let { status } = request || {};
 
       return {
         posts: [],

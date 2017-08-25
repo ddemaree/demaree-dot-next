@@ -2,15 +2,34 @@ import Link from 'next/link'
 import PostHeader from './post-header'
 import PostFooter from './post-footer'
 
-export default ({post}) => {
+export default ({ post, context = 'index' }) => {
   let { format, slug, title } = post;
   let classNames = `blog-post post post--${format}`;
   let content;
+
+  let parts = post.content.split(/(?:<p>)<!--more-->(?:<\/p>)/);
+  let display_content, jump_link;
   
+  if(context == 'index') {
+    display_content = parts[0];
+
+    if (parts.count > 1) {
+      jump_link = (
+        <p className="read-more" name="name">
+          <Link href={{pathname: "/posts/show", query: {id: slug}, hash: "more"}}>
+            <a>Read more &rarr;</a>
+          </Link>
+        </p>
+      )
+    }
+  } else {
+    display_content = parts.join("\n");
+  }
+
   if(format == 'quote'){
     content = (
       <div className="quote-body">
-        <div className="post-content" dangerouslySetInnerHTML={{__html: post.content}} />
+        <div className="post-content" dangerouslySetInnerHTML={{__html: display_content}} />
 
         <style jsx>{`
           .post-content :global(blockquote) {
@@ -50,7 +69,7 @@ export default ({post}) => {
         <h2 className="link-header">
           <a className="external" rel="external" href={post.link_url}>{title}</a>
         </h2>
-        <div className="post-content" dangerouslySetInnerHTML={{__html: post.content}} />
+        <div className="post-content" dangerouslySetInnerHTML={{__html: display_content}} />
         <style jsx global>{`
         .link-header {
           font-size: inherit;  
@@ -66,7 +85,8 @@ export default ({post}) => {
     content = (
       <div>
         <PostHeader slug={slug} title={title} />
-        <div className="post-content" dangerouslySetInnerHTML={{__html: post.content}} />
+        <div className="post-content" dangerouslySetInnerHTML={{__html: display_content}} />
+        {jump_link}
       </div>
     );
   }

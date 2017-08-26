@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import SiteHeader from './site-header'
+import SiteNav from './site-nav'
 
 export default ({ title, children }) => {
   let siteTitle = "David’s web site";
@@ -22,7 +23,8 @@ export default ({ title, children }) => {
       </Head>
 
       <SiteHeader />
-      
+      <SiteNav />
+
       <div className="site-content">
       {children}
       </div>
@@ -54,7 +56,7 @@ export default ({ title, children }) => {
           box-sizing: border-box;
         }
         html {
-          padding: calc(var(--gutter) * 2) var(--outer-padding);
+          padding: 0 var(--outer-padding);
         }
         body {
           font-family: 'acumin-pro', --apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI', sans-serif;
@@ -75,36 +77,36 @@ export default ({ title, children }) => {
           background-color: #e5e5e5;
         }
 
-        .container {
-          display: grid;
-          grid-column-gap: var(--gutter);
-          grid-row-gap: var(--gutter);
-          grid-template-columns: repeat(var(--cols), 1fr);
-        }
         body {
           margin: 0;
           padding: 0;
         }
-        body:before {
-          display: block;
-          content: '';
-          position: fixed;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          width: var(--fc-width);
-          background-color: #fff;
-          z-index: -1;
-          {/* border-right: 1px solid #e0e0e0; */}
-          box-shadow: 0 0 20px #eee, inset -1px 0 0 #fff;
+
+        .container {
+          display: grid;
+          grid-column-gap: var(--gutter);
+          grid-row-gap: var(--gutter);
+
+          grid-template-columns: 16em repeat(4, 1fr) 8em;
+          grid-template-rows: auto 1fr auto;
+          grid-template-areas:
+            "header header header sidebar sidebar sidebar"
+            "main main main main main main"
+            ". footer footer footer footer footer";
         }
+
+        .site-header, .site-nav, .site-content {
+          {/* background: #ffe; */}
+        }
+
         .site-header {
-          grid-column-start: 0;
-          grid-column-end: span var(--sidebar-span);
+          grid-area: header;
+        }
+        .site-nav {
+          grid-area: sidebar;
         }
         .site-content {
-          grid-column-start: calc(var(--sidebar-span) + var(--mainbar-offset) + 1);
-          grid-column-end: span var(--mainbar-span);
+          grid-area: main;
         }
         h1, h2, h3, h4 {
           margin: 2em 0 0.5em;
@@ -119,41 +121,6 @@ export default ({ title, children }) => {
           font-size: 1em;
         }
 
-        @media (min-width: 1200px) {
-          :root {
-            --outer-padding: 8%;
-          }
-        }
-
-        @media (max-width: 1000px) {
-          :root {
-            --outer-padding: 2rem;
-            --mainbar-offset: 1;
-            --mainbar-span: 10;
-            --sidebar-span: 4;
-          }
-        }
-        @media (max-width: 800px) {
-          :root {
-            --outer-padding: 0;
-          }
-          html {
-            padding: 0;
-          }
-          body:before {
-            display: none;
-          }
-          .container {
-            display: block;
-          }
-          .site-header, .site-content {
-            padding: 2em 9%;
-          }
-          .site-header {
-            box-shadow: 0 0 8px #ccc;
-            background: #fff;
-          }
-        }
       `}</style>
     </div>
   );

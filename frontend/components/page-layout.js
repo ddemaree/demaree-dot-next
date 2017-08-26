@@ -95,10 +95,6 @@ export default ({ title, children }) => {
             ". footer footer footer footer footer";
         }
 
-        .site-header, .site-nav, .site-content {
-          {/* background: #ffe; */}
-        }
-
         .site-header {
           grid-area: header;
         }

@@ -103,7 +103,12 @@ export default ({ post, context = 'index' }) => {
         margin: 0 auto;
         max-width: 49em;
         padding: 2.5em 2.5em 0;
-      }  
+      }
+      @media (max-width: 700px) {
+        article {
+          padding: 2.5em 1.5em;
+        }
+      }
       `}</style>
 
       {/* These styles must be globaled because one can't predict the JSX ID of the containing element */}

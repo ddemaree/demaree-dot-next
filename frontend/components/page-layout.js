@@ -122,6 +122,16 @@ export default ({ title, children, section }) => {
           min-height: 3em;
         }
 
+        @media (max-width: 700px) {
+          body {
+            margin-left: 0;
+          }
+          .site-header {
+            position: static;
+            width: auto;
+          }
+        }
+
       `}</style>
     </div>
   );

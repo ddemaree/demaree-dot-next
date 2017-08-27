@@ -33,9 +33,9 @@ export default ({ post, context = 'index' }) => {
 
         <style jsx>{`
           .post-content :global(blockquote) {
-            font-size: 1.75em;
-            line-height: 1.25;
+            font-size: 1.375em;
             font-weight: 300;
+            line-height: 1.25;
             border: none;
             letter-spacing: -0.5px;
             border-radius: 0.25em;
@@ -44,14 +44,15 @@ export default ({ post, context = 'index' }) => {
             color: #000;
           }
 
-          .post-content:before {
+          .post-content :global(blockquote:before) {
             content: '“';
             display: block;
             position: absolute;
-            font-size: 3em;
+            font-size: 1.75em;
             line-height: 0.5em;
             margin-top: 0.25em;
             color: #ccc;
+            margin-left: -0.625em;
           }
 
           .quote-body :global(blockquote + p),
@@ -92,31 +93,19 @@ export default ({ post, context = 'index' }) => {
   }
 
   return (
-    <div className={classNames}>
+    <article className={classNames}>
       <PostFooter post={post} />
 
       {content}      
 
       <style jsx>{`
-      .blog-post {
-        margin: 2em 0;
-        border-bottom: 1px solid #0003;
-        padding-bottom: 2em;
-      }
-
-      .blog-post:first-child {
-        margin-top: 0;
-      }
-
-      .blog-post:last-child {
-        margin-bottom: 0;
-      }
-
-      .post__header {
-        font-size: 1.5em;
-        margin: 0;
-      }
+      article {
+        margin: 0 auto;
+        max-width: 49em;
+        padding: 2.5em 2.5em 0;
+      }  
       `}</style>
+
       {/* These styles must be globaled because one can't predict the JSX ID of the containing element */}
       <style jsx global>{`
         .post-content blockquote {
@@ -133,6 +122,6 @@ export default ({ post, context = 'index' }) => {
           margin-bottom: 0;
         }
       `}</style>
-    </div>
+    </article>
   )
 };

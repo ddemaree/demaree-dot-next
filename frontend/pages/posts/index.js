@@ -1,5 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
 import PostsAPI from 'components/posts-api'
 import PageLayout from 'components/page-layout'
 import BlogListing from 'components/blog-listing'
@@ -16,7 +15,7 @@ export default class extends React.Component {
     let { posts, error, page, total_posts, total_pages } = this.props;
 
     return (
-      <PageLayout>
+      <PageLayout section="posts">
         <BlogListing posts={posts} error={error} page={page} total_pages={total_pages} />
       </PageLayout>
     )

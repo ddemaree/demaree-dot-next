@@ -17,9 +17,10 @@ export default ({ post }) => {
       <style jsx>{`
       .post__footer {
         color: #999;
-        font-size: 0.875em;
+        font-size: 0.75em;
         margin-bottom: 1em;
         text-transform: uppercase;
+        font-family: 'halyard-micro';
       }
       .post__footer a {
         border: 0;

@@ -8,9 +8,11 @@ export default ({slug, title}) => (
     <style jsx>{`
       .post__header {
         font-weight: 300;
-        font-size: 2em;
+        font-size: 2.25em;
+        line-height: 1.1;
+        font-family: 'halyard-display';
       }
-      a {
+      a:link, a:visited, a {
         border: 0;
       }
     `}</style>

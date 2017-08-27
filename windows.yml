@@ -1,4 +1,11 @@
 version: '3.1'
 services:
-  web:
-    volumes: "/c/Users/David Demaree/Projects/demaree-dot-next/frontend:/home/nodejs/app"
+  frontend:
+    build: "./frontend"
+    ports:
+      - 4000:4000
+    environment:
+      PORT: 4000
+      POSTS_API: "https://wp.demar.ee"
+    volumes:
+      - "/c/Users/David Demaree/Projects/demaree-dot-next/frontend:/home/nodejs/app"

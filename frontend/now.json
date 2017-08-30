@@ -5,6 +5,7 @@
   "type": "npm",
   "public": true,
   "alias": [
-    "dd-next"
+    "dd-next",
+    "next.demaree.space"
   ]
 }

@@ -109,9 +109,10 @@ export default ({ title, children, section }) => {
           bottom: 0;
           left: 0;
           width: 240px;
-          background: #000;
+          background: rgba(0,0,0,0.8);
           color: #fff;
           padding: 1.5em;
+          z-index: 10;
 
           display: flex;
           flex-direction: column;

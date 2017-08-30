@@ -27,12 +27,10 @@ export default ({section}) => (
       color: #ccc;
     }
     nav :global(a) {
-      margin: 0 -0.75em;
       display: block;
-      padding: 0.5em 0.75em;
+      padding: 0.25em 0.5em;
       text-decoration: none;
       border-bottom: 1px solid var(--border-color);
-      border-radius: 1.5em;
     }
     nav :global(a:hover) {
       background-color: rebeccapurple;

@@ -31,8 +31,6 @@ export default ({ title, children, section }) => {
         </Link>
 
         <SiteNav section={section} />
-
-        <div className="site-social">SOCIAL</div>
       </div>
 
       <div className="site-content">
@@ -51,7 +49,7 @@ export default ({ title, children, section }) => {
 
         body {
           font-family: 'halyard-text', --apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI', sans-serif;
-          margin: 0 0 0 240px;
+          margin: 0;
           padding: 0;
         }
 
@@ -83,6 +81,11 @@ export default ({ title, children, section }) => {
           font-size: 1em;
         }
 
+        .container {
+          margin-left: 240px;
+          background: #fff;
+        }
+
         .logo:link {
           border: none;
           font-weight: bold;
@@ -109,27 +112,30 @@ export default ({ title, children, section }) => {
           bottom: 0;
           left: 0;
           width: 240px;
-          background: rgba(0,0,0,0.8);
+          background: #000;
           color: #fff;
           padding: 1.5em;
           z-index: 10;
 
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          {/* justify-content: space-between; */}
         }
 
         .site-social {
-          min-height: 3em;
+          display: none;
         }
 
         @media (max-width: 700px) {
-          body {
+          .container {
             margin-left: 0;
           }
           .site-header {
             position: static;
             width: auto;
+          }
+          .site-nav {
+            flex-direction: row !important;
           }
         }
 

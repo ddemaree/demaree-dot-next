@@ -33,9 +33,6 @@ export default ({ post, context = 'index' }) => {
 
         <style jsx>{`
           .post-content :global(blockquote) {
-            font-size: 1.375em;
-            font-weight: 300;
-            line-height: 1.25;
             border: none;
             letter-spacing: -0.5px;
             border-radius: 0.25em;

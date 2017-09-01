@@ -9,6 +9,7 @@ services:
     environment:
       PORT: 4000
       POSTS_API: "http://wordpress"
+      POSTS_CLIENT_API: "http://localhost:8080"
     volumes:
       - "./frontend:/home/nodejs/app"
 

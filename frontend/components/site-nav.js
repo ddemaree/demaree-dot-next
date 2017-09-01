@@ -4,7 +4,7 @@ const NavLink = ({children, href, active, emoji, label}) => {
   const className = (!!active ? "active" : "inactive");
 
   return (
-    <Link href={href}>
+    <Link prefetch href={href}>
       <a className={`nav-link ${className}`}>
         {emoji}&nbsp;
         <span>{label}</span>

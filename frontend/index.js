@@ -31,6 +31,12 @@ app.prepare()
 .then(db => {
   server = express();
 
+  server.get('/posts/:year/:slug', (req, res) => {
+    const { slug } = req.params;
+    const passedQuery = Object.assign({}, req.query, {id: slug});
+    return app.render(req, res, '/posts', passedQuery);
+  })
+
   // Default catch-all handler to allow Next.js to handle all other routes
   server.all('*', (req, res) => {
     return handle(req, res)

@@ -9,7 +9,7 @@ export default ({ post }) => {
   return (
     <div className="post__footer">
       <time className="post__date_gmt">
-        <Link href={{pathname: "/posts/show", query: {id: post.slug}}}>
+        <Link href={{pathname: "/posts", query: {id: post.slug}}} as={`/posts/2017/${post.slug}`}>
           <a>{ formattedDate }</a>
         </Link>
       </time>

@@ -1,6 +1,9 @@
 import axios from 'axios'
 import moment from 'moment'
 
+const DEFAULT_KEY = '__DD_POSTS_API__';
+const IS_BROWSER = typeof window !== 'undefined';
+
 const postsApi = axios.create({
   baseURL: `${process.env.POSTS_API}/wp-json/wp/v2`
 })
@@ -19,7 +22,30 @@ const wpPostToGoodJson = (post) => {
 }
 
 export default class PostsAPI {
-  static async getPostBySlug(id) {
+
+  static getInstance() {
+    if(IS_BROWSER) {
+      if(!window[DEFAULT_KEY]) {
+        console.log("> Initializing new PostsAPI on client")
+        window[DEFAULT_KEY] = new PostsAPI({useCache: true});
+      } else {
+        console.log("> Using existing PostsAPI on client")
+      }
+
+      return window[DEFAULT_KEY];
+    } else {
+      // If server, always return a new instance
+      console.log("> Initializing new PostsAPI on server")
+      return new PostsAPI({});
+    }
+  }
+
+  constructor({ useCache = false }) {
+    this.cache = {};
+    this.useCache = useCache;
+  }
+
+  async getPostBySlug(id) {
     return postsApi.get('/posts', {
       params: { slug: id }
     })
@@ -37,7 +63,7 @@ export default class PostsAPI {
     })
   }
 
-  static async getPosts({ page = 1, per_page = 10 }){
+  async getPosts({ page = 1, per_page = 10 }){
     return postsApi.get('/posts', {
       params: { page, per_page }
     })

@@ -3,10 +3,19 @@ import PostsAPI from 'components/posts-api'
 import PageLayout from 'components/page-layout'
 import BlogListing from 'components/blog-listing'
 
+const postsApi = PostsAPI.getInstance();
+
 export default class extends React.Component {
   static async getInitialProps({query, req}){
-    let page = query.page || 1;
-    return await PostsAPI.getPosts({
+    // console.log(postsApi);
+    const page = query.page || 1;
+    const slug = query.id || null;
+
+    if(slug) {
+      console.log("> Rendering /posts?id - Need to show single page layout")
+    }
+
+    return await postsApi.getPosts({
       page
     });
   }

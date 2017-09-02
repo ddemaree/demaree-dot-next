@@ -1,11 +1,14 @@
 import Link from 'next/link'
+import Router from 'next/router'
 
 const NavLink = ({children, href, active, emoji, label}) => {
   const className = (!!active ? "active" : "inactive");
 
   return (
-    <Link prefetch href={href}>
-      <a className={`nav-link ${className}`}>
+    <Link href={href}>
+      <a className={`nav-link ${className}`} onMouseOver={
+        (e) => { Router.prefetch(href) }
+      }>
         {emoji}&nbsp;
         <span>{label}</span>
       </a>

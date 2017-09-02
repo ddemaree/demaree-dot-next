@@ -7,19 +7,26 @@ const postsApi = PostsAPI.getInstance();
 
 export default class extends React.Component {
   static async getInitialProps({query, req}){
-    // console.log(postsApi);
     const page = query.page || 1;
     const slug = query.id || null;
 
     if(slug) {
-      console.log("> Rendering /posts?id - Need to show single page layout")
+      console.log("> Rendering /posts?id - Need to show single page layout");
+      return await postsApi.getPostBySlug(slug);
+    } else {
+      return await postsApi.getPosts({
+        page
+      });
     }
-
-    return await postsApi.getPosts({
-      page
-    });
   }
   
+  componentWillReceiveProps(nextProps) {
+    const { pathname, query } = nextProps.url
+    // fetch data based on the new query
+    console.log("RECEIVED PROPS");
+    console.log(nextProps);
+  }
+
   render() {
     let { posts, error, page, total_posts, total_pages } = this.props;
 

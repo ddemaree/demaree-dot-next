@@ -7,7 +7,7 @@ export default class Home extends React.Component {
     body.classList.add('body-home');
 
     // Only show/load image after initial page load when React mounts
-    // this.elem.classList.add('show-image');
+    this.elem.classList.add('show-image');
     setTimeout(()=>{
       this.img.classList.add('show');
       setTimeout(() => {
@@ -16,12 +16,25 @@ export default class Home extends React.Component {
     }, 1000);
 
     this.setElementHeight();
-    window.addEventListener('resize', this.setElementHeight.bind(this));
+    window.addEventListener('resize', this.setElementHeight);
+    window.addEventListener('wheel', this.handleScroll)
   }
 
   componentWillUnmount() {
     document.body.classList.remove('body-home');
-    window.removeEventListener('resize', this.setElementHeight.bind(this));
+    window.removeEventListener('wheel', this.handleScroll);
+    window.removeEventListener('resize', this.setElementHeight);
+  }
+
+  handleScroll(event) {
+    event.preventDefault();
+
+    const THRESHOLD = 30;
+    const absDelta = Math.abs(event.deltaY);
+
+    if(absDelta > THRESHOLD) {
+      console.log(`OVER - ${absDelta}`);
+    }
   }
 
   setElementHeight(event) {
@@ -40,7 +53,7 @@ export default class Home extends React.Component {
     return (
       <div className="home" ref={(elem) => { this.elem = elem; } }>
         <div className="home-img" ref={(el) => { this.img = el; }} />
-        <div className="home-text" ref={(el) => { this.text = el; }}>
+        <div className="home-text slide" ref={(el) => { this.text = el; }}>
           <p>Designers like to put big text on their home pages. Perhaps a quotation. Sometimes a slogan. WTF is up with that?</p>
         </div>
 
@@ -48,6 +61,8 @@ export default class Home extends React.Component {
         .home {
           background-color: #f0f;
           background-image: linear-gradient(0deg, #f0f, #ffcf00);
+        }
+        .slide, .home-text {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -81,7 +96,7 @@ export default class Home extends React.Component {
           color: #fff;
           text-shadow: 0 0 60px rgba(0,0,0,0.4);
           text-align: center;
-          opacity: 0;
+          {/* opacity: 0; */}
         }
         .home-text.show {
           opacity: 1;

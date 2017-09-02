@@ -16,14 +16,14 @@ export default class Home extends React.Component {
     }, 1000);
 
     this.setElementHeight();
-    window.addEventListener('resize', this.setElementHeight);
-    window.addEventListener('wheel', this.handleScroll)
+    window.addEventListener('resize', this.setElementHeight.bind(this));
+    // window.addEventListener('wheel', this.handleScroll)
   }
 
   componentWillUnmount() {
     document.body.classList.remove('body-home');
-    window.removeEventListener('wheel', this.handleScroll);
-    window.removeEventListener('resize', this.setElementHeight);
+    window.removeEventListener('resize', this.setElementHeight.bind(this));
+    // window.removeEventListener('wheel', this.handleScroll);
   }
 
   handleScroll(event) {
@@ -38,6 +38,11 @@ export default class Home extends React.Component {
   }
 
   setElementHeight(event) {
+    if(!this.elem) {
+      console.log("Lost reference to this.elem in Home")
+      return false;
+    }
+
     const [ header ] = document.getElementsByClassName('site-header');
     let newHeight;
 
@@ -54,7 +59,7 @@ export default class Home extends React.Component {
       <div className="home" ref={(elem) => { this.elem = elem; } }>
         <div className="home-img" ref={(el) => { this.img = el; }} />
         <div className="home-text slide" ref={(el) => { this.text = el; }}>
-          <p>Designers like to put big text on their home pages. Perhaps a quotation. Sometimes a slogan. WTF is up with that?</p>
+          <p>Some designers like to put big text on their home pages. Perhaps a quotation. Sometimes a slogan. WTF is up with that?</p>
         </div>
 
         <style jsx>{`

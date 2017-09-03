@@ -13,16 +13,18 @@ const PageLink = ({ children, page, disabled = false, pathname = "/posts" })=> {
   }
 }
 
-export default (props) => {
+const BlogListing = (props, context) => {
+  const { posts, error } = props;
+  let { page, total_pages } = props;
+  console.log(context)
 
-  let { posts, error, page, total_pages } = props;
   page = parseInt(page)
   total_pages = parseInt(total_pages)
 
   let errorTag, pagination;
-  let postTags = posts.map(post => { return (
-    <BlogPost post={post} key={`index-post-${post.slug}`} />
-  ) })
+  const postTags = posts.map(post => (
+    <BlogPost context={context} post={post} key={`index-post-${post.slug}`} />
+  ));
 
   if(error) {
     console.log(error);
@@ -48,3 +50,10 @@ export default (props) => {
     </div>
   );
 }
+
+import PropTypes from 'prop-types'
+BlogListing.contextTypes = {
+  context: PropTypes.string
+}
+
+export default BlogListing;

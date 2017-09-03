@@ -42,8 +42,8 @@ function bsuit_setup() {
 	add_theme_support( 'post-formats', array(
 		'link',
 		'quote',
+		'image',
 		// 'aside',
-		// 'image',
 		// 'video',
 		// 'gallery',
 		// 'audio',
@@ -179,16 +179,70 @@ function demaree_get_link_url() {
 }
 
 
+add_action( 'rest_api_init', 'register_metas');
+function register_metas() {
+	register_meta('post', 'link_url', array(
+		'show_in_rest' => true,
+		'single' => true,
+		'type' => 'string',
+		'description' => 'External URL for link posts'	
+	));
+}
+
 add_action( 'rest_api_init', 'slug_register_link_url' );
 function slug_register_link_url() {
-    register_rest_field( 'post',
-        'link_url',
-        array(
-            'get_callback'    => 'slug_get_link_url',
-            'update_callback' => null,
-            'schema'          => null,
-        )
-    );
+	
+	register_rest_field( 'post',
+		'link_url',
+		array(
+			'get_callback'    => 'slug_get_link_url',
+			'update_callback' => null,
+			'schema'          => null,
+		)
+	);
+
+	register_rest_field('post',
+		'previous_post',
+		array(
+			'get_callback' => function( $object, $field_name, $request ) {
+				if( $prevpost = get_adjacent_post( false, '', true ) ) {
+					return array(
+						'id' => $prevpost->ID,
+						'title' => $prevpost->post_title,
+						'excerpt' => $prevpost->post_excerpt,
+						'status' => $prevpost->post_status,
+						'date' => $prevpost->post_date_gmt,
+						'slug' => $prevpost->post_name
+					);
+				} else {
+					return null;
+				}
+			},
+			'schema' => null
+		)
+	);
+
+	register_rest_field('post',
+		'next_post',
+		array(
+			'get_callback' => function( $object, $field_name, $request ) {
+				if( $prevpost = get_adjacent_post( false, '', false ) ) {
+					return array(
+						'id' => $prevpost->ID,
+						'title' => $prevpost->post_title,
+						'excerpt' => $prevpost->post_excerpt,
+						'status' => $prevpost->post_status,
+						'date' => $prevpost->post_date_gmt,
+						'slug' => $prevpost->post_name
+					);
+				} else {
+					return null;
+				}
+			},
+			'schema' => null
+		)
+	);
+
 }
 
 /**

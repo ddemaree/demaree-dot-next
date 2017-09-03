@@ -1,105 +1,61 @@
 import Link from 'next/link'
-import PostHeader from './post-header'
 import PostFooter from './post-footer'
 
+
+const PostPagination = ({ post }) => {
+  const { previous_post, next_post } = post;
+
+  return (
+    <div className="post-pagination">
+      POST PAGINATION
+    </div>
+  );
+}
+
+
+import { LinkContent, QuoteContent, StandardContent } from './post-content'
+
 export default ({ post, context = 'index' }) => {
-  let { format, slug, title } = post;
-  let classNames = `blog-post post post--${format}`;
-  let content;
-
-  let parts = post.content.split(/(?:<p>)<!--more-->(?:<\/p>)/);
-  let display_content, jump_link;
-  
-  if(context == 'index') {
-    display_content = parts[0];
-
-    if (parts.count > 1) {
-      jump_link = (
-        <p className="read-more" name="name">
-          <Link href={{pathname: "/posts/show", query: {id: slug}, hash: "more"}}>
-            <a>Read more &rarr;</a>
-          </Link>
-        </p>
-      )
-    }
-  } else {
-    display_content = parts.join("\n");
-  }
+  const { format, slug, title } = post;
+  const classNames = `blog-post post post--${format} post--${context}`;
+  let content, footer;
 
   if(format == 'quote'){
     content = (
-      <div className="quote-body">
-        <div className="post-content" dangerouslySetInnerHTML={{__html: display_content}} />
-
-        <style jsx>{`
-          .post-content :global(blockquote) {
-            border: none;
-            letter-spacing: -0.5px;
-            border-radius: 0.25em;
-            margin: 0 0 0.25em;
-            padding: 0 1em;
-            color: #000;
-          }
-
-          .post-content :global(blockquote:before) {
-            content: '“';
-            display: block;
-            position: absolute;
-            font-size: 1.75em;
-            line-height: 0.5em;
-            margin-top: 0.25em;
-            color: #ccc;
-            margin-left: -0.625em;
-          }
-
-          .quote-body :global(blockquote + p),
-          .post-content :global(.quote-source) {
-            padding-left: 1.75em;
-          }
-        `}</style>
-      </div>
-      
-    );
+      <QuoteContent post={post} />
+    )
   }
   else if(format == 'link') {
     content = (
-      <div>
-        <h2 className="link-header">
-          <a className="external" rel="external" href={post.link_url}>{title}</a>
-        </h2>
-        <div className="post-content" dangerouslySetInnerHTML={{__html: display_content}} />
-        <style jsx global>{`
-        .link-header {
-          font-size: inherit;  
-        }
-        .link-header .external:after {
-          content: '→';
-        }
-        `}</style>
-      </div>
+      <LinkContent post={post} />
     )
   }
   else {
     content = (
-      <div>
-        <PostHeader slug={slug} title={title} />
-        <div className="post-content" dangerouslySetInnerHTML={{__html: display_content}} />
-        {jump_link}
-      </div>
-    );
+      <StandardContent post={post} />
+    )
+  }
+
+  if(context == 'detail'){
+    footer = (
+      <PostPagination post={post} />
+    )
   }
 
   return (
     <article className={classNames}>
       <PostFooter post={post} />
-
-      {content}      
+      {content}
+      {footer}
 
       <style jsx>{`
       article {
         margin: 0 auto;
-        max-width: 49em;
-        padding: 2.5em 2.5em 0;
+        max-width: 42em;
+        padding: 2.5em;
+      }
+      article.post--index {
+        padding-bottom: 0;
       }
       @media (max-width: 700px) {
         article {

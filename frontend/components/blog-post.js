@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import PostFooter from './post-footer'
 
-
 const PostPagination = ({ post }) => {
   const { previous_post, next_post } = post;
 
@@ -12,12 +11,11 @@ const PostPagination = ({ post }) => {
   );
 }
 
-
 import { LinkContent, QuoteContent, StandardContent } from './post-content'
 
-export default ({ post, context = 'index' }) => {
+export default ({ post }) => {
   const { format, slug, title } = post;
-  const classNames = `blog-post post post--${format} post--${context}`;
+  const classNames = `blog-post post post--${format}`;
   let content, footer;
 
   if(format == 'quote'){
@@ -36,17 +34,13 @@ export default ({ post, context = 'index' }) => {
     )
   }
 
-  if(context == 'detail'){
-    footer = (
-      <PostPagination post={post} />
-    )
-  }
-
   return (
     <article className={classNames}>
       <PostFooter post={post} />
+
       {content}
-      {footer}
+
+      <PostPagination post={post} />
 
       <style jsx>{`
       article {

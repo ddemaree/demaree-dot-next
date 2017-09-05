@@ -51,8 +51,11 @@ $table_prefix  = 'wp_';
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
 define('WP_DEBUG', false);
+define('WP_ALLOW_MULTISITE', true);
 
-define( 'WP_ALLOW_MULTISITE', true );
+// Override the site/home URLs to make it easier to reuse production data dumps
+// if( $_ENV['WP_SITEURL'] ) define( 'WP_SITEURL', $_ENV['WP_SITEURL'] );
+// if( $_ENV['WP_HOME'] ) define( 'WP_HOME', $_ENV['WP_HOME'] );
 
 // Disable automatic updates
 define( 'DISALLOW_FILE_EDIT', true );

@@ -10,23 +10,6 @@ import Router from 'next/router'
 
 export default class PageLayout extends React.Component {
 
-  componentDidMount() {
-    console.log("> Did mount PageLayout")
-    Router.onRouteChangeStart = (url) => {
-      console.log(`Loading: ${url}`)
-      // NProgress.start()
-    }
-    Router.onRouteChangeComplete = (url) => {
-      console.log(`Done loading: ${url}`)
-    }
-    // Router.onRouteChangeError = () => NProgress.done()
-  }
-
-  componentWillUnmount() {
-    console.log("> Will unmount PageLayout")
-  }
-
-
   render() {
     const { title, section, children } = this.props;
 
@@ -105,6 +88,20 @@ export default class PageLayout extends React.Component {
             font-size: 1em;
           }
   
+          article {
+            margin: 0 auto;
+            max-width: 42em;
+            padding: 2.5em;
+          }
+          article[class^="archive-"] {
+            padding-bottom: 0;
+          }
+          @media (max-width: 700px) {
+            article {
+              padding: 2.5em 1.5em;
+            }
+          }
+
           .container {
             margin-left: 240px;
             background: #fff;
@@ -166,5 +163,6 @@ export default class PageLayout extends React.Component {
         `}</style>
       </div>
     )
-  }
+  } // end render()
+
 }

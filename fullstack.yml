@@ -22,7 +22,11 @@ services:
     ports:
       - 8080:80
     environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: example
+      WP_HOME: http://localhost:8080
+      WP_SITEURL: http://localhost:8080
     volumes:
       - "./wordpress/themes/birthdaysuit:/var/www/html/wp-content/themes/birthdaysuit"
 
@@ -30,5 +34,8 @@ services:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: wordpress
+    ports:
+      - 3307:3306
     volumes:
       - "./sqls:/docker-entrypoint-initdb.d"

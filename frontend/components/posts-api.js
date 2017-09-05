@@ -10,14 +10,22 @@ const postsApi = axios.create({
 
 // Re-formats JSON from the WP API to a document the frontend will understand
 const wpPostToGoodJson = (post) => {
+  const postDate = moment(post.date_gmt);
+  const publish_date = postDate.toISOString();
+  const permalink = `/posts/${postDate.format('YYYY')}/${post.slug}`;
+
   return {
+    permalink,
     title: post.title.rendered,
     content: post.content.rendered,
     format: (post.format || "standard"),
     slug: (post.slug || "no-slug"),
+    moment: postDate,
     date: post.date_gmt,
+    publish_date,
     link_url: post.link_url,
-    _post: {...post}
+    punk: (hello) => { return hello; },
+    // _post: {...post}
   }
 }
 
@@ -63,7 +71,7 @@ export default class PostsAPI {
     })
   }
 
-  async getPosts({ page = 1, per_page = 10 }){
+  async getPosts({ page = 1, per_page = 20 }){
     return postsApi.get('/posts', {
       params: { page, per_page }
     })

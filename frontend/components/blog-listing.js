@@ -34,12 +34,14 @@ const PostIndexDateline = ({date}) => {
 }
 
 const BlogPostRow = ({post}) => {
+  const { id, title, postFormat, date, slug } = post;
+
   return (
-    <article className={`archive-${post.format}`}>
-      <Link href={{pathname: '/posts', query: {id: post.slug}}} as={post.permalink}>
-        <a href={post.permalink}>
-          <PostIndexHeader title={post.title} format={post.format} />
-          <PostIndexDateline date={post.publish_date} />
+    <article className={`archive-${postFormat}`}>
+      <Link href={{pathname: '/posts', query: {id}}}>
+        <a>
+          <PostIndexHeader title={title} format={postFormat} />
+          <PostIndexDateline date={date} />
         </a>
       </Link>
     </article>
@@ -84,14 +86,14 @@ const BlogListing = (props) => {
     );
   }
 
-  const groupedPosts = groupBy(posts, post => moment(post.publish_date).startOf('month'))
+  // const groupedPosts = groupBy(posts, post => moment(post.publish_date).startOf('month'))
 
   return (
     <div className="blog-posts">
       {errorTag}
       {
         posts.map(post => (
-          <BlogPostRow post={post} key={`index-post-${post.slug}`} />
+          <BlogPostRow post={post} key={`index-post-${post.id}`} />
         ))
       }
       <PostsIndexPagination page={page} total_pages={total_pages}  />

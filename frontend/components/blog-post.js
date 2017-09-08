@@ -1,29 +1,32 @@
 import Link from 'next/link'
 import PostFooter from './post-footer'
+import { indexOf } from 'lodash'
 
-const PostPagination = ({ post }) => {
-  const { previous_post, next_post } = post;
+const PostPagination = ({ post, ids }) => {
+  const postIndex = indexOf(ids, post.id)
+  const prevId = ids[postIndex - 1]
+  const nextId = ids[postIndex + 1]
 
   return (
     <div className="post-pagination">
-      POST PAGINATION
+      {prevId}
     </div>
   );
 }
 
 import { LinkContent, QuoteContent, StandardContent } from './post-content'
 
-export default ({ post }) => {
-  const { format, slug, title } = post;
-  const classNames = `blog-post post post--${format}`;
+export default ({ post, ids }) => {
+  const { postFormat, slug, title } = post;
+  const classNames = `blog-post post post--${postFormat}`;
   let content, footer;
 
-  if(format == 'quote'){
+  if(postFormat == 'quote'){
     content = (
       <QuoteContent post={post} />
     )
   }
-  else if(format == 'link') {
+  else if(postFormat == 'link') {
     content = (
       <LinkContent post={post} />
     )
@@ -40,7 +43,7 @@ export default ({ post }) => {
 
       {content}
 
-      <PostPagination post={post} />
+      <PostPagination post={post} ids={ids} />
 
       <style jsx>{`
       article {

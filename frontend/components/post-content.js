@@ -1,10 +1,19 @@
+import marked from 'marked'
+marked.setOptions({
+  gfm: true,
+  tables: true,
+  breaks: false,
+  smartypants: true
+});
+
 const LinkContent = ({ post }) => {
-  const { format, slug, title, content, link_url } = post;
+  const { format, slug, title, body_html, linkUrl } = post;
+  const content = body_html;
 
   return (
     <div>
       <h2 className="post--link__header link-header">
-        <a className="external" rel="external" href={link_url}>{title}</a>
+        <a className="external" rel="external" href={linkUrl}>{title}</a>
       </h2>
       <div className="post-content post__content" 
            dangerouslySetInnerHTML={{__html: content}} />
@@ -22,12 +31,12 @@ const LinkContent = ({ post }) => {
 }
 
 const QuoteContent = ({ post }) => {
-  const { format, slug, title, content, link_url } = post;
+  const { postFormat, slug, title, body_html, linkUrl } = post;
 
   return (
     <div className="quote-body">
       <div className="post-content"
-           dangerouslySetInnerHTML={{__html: content}} />
+           dangerouslySetInnerHTML={{__html: body_html}} />
 
       <style jsx>{`
         .post-content :global(blockquote) {
@@ -62,30 +71,14 @@ const QuoteContent = ({ post }) => {
 import PostHeader from './post-header'
 
 const StandardContent = ({ post, context = 'index' }) => {
-  const { format, slug, title, content } = post;
-  const parts = content.split(/(?:<p>)<!--more-->(?:<\/p>)/);
+  const { postFormat, slug, title, body } = post;
+  const parts = body.split(/(?:<p>)<!--more-->(?:<\/p>)/);
   let display_content, jump_link;
-
-  if(context == 'index') {
-    display_content = parts[0];
-
-    if (parts.count > 1) {
-      jump_link = (
-        <p className="read-more" name="name">
-          <Link href={{pathname: "/posts/show", query: {id: slug}, hash: "more"}}>
-            <a>Read more &rarr;</a>
-          </Link>
-        </p>
-      )
-    }
-  } else {
-    display_content = parts.join("\n");
-  }
 
   return (
     <div>
       <PostHeader slug={slug} title={title} />
-      <div className="post-content" dangerouslySetInnerHTML={{__html: display_content}} />
+      <div className="post-content" dangerouslySetInnerHTML={{__html: marked(body)}} />
       {jump_link}
     </div>
   )

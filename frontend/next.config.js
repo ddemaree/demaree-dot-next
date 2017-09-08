@@ -11,8 +11,11 @@ module.exports = {
       POSTS_API = JSON.stringify(process.env.POSTS_API);
     }
 
+    // Don't forget to stringify these, since they'll be plopped directly into client side JS code
     const defines = new webpack.DefinePlugin({
-      'process.env.POSTS_API': POSTS_API
+      'process.env.POSTS_API': POSTS_API,
+      'process.env.CFUL_SPACE_ID': JSON.stringify(process.env.CFUL_SPACE_ID),
+      'process.env.CFUL_ACCESS_TOKEN': JSON.stringify(process.env.CFUL_ACCESS_TOKEN)
     });
     config.plugins.push(defines);
 

@@ -1,32 +1,21 @@
-import axios from 'axios'
 import moment from 'moment'
 
 const DEFAULT_KEY = '__DD_POSTS_API__';
 const IS_BROWSER = typeof window !== 'undefined';
 
-const postsApi = axios.create({
-  baseURL: `${process.env.POSTS_API}/wp-json/wp/v2`
-})
+// TODO: Does the Cful API support If-Modified-Since?
+import { createClient } from 'contentful'
+import formatPost from 'components/format-post'
 
-// Re-formats JSON from the WP API to a document the frontend will understand
-const wpPostToGoodJson = (post) => {
-  const postDate = moment(post.date_gmt);
-  const publish_date = postDate.toISOString();
-  const permalink = `/posts/${postDate.format('YYYY')}/${post.slug}`;
+const contentful = createClient({
+  space: process.env.CFUL_SPACE_ID,
+  accessToken: process.env.CFUL_ACCESS_TOKEN
+});
 
-  return {
-    permalink,
-    title: post.title.rendered,
-    content: post.content.rendered,
-    format: (post.format || "standard"),
-    slug: (post.slug || "no-slug"),
-    moment: postDate,
-    date: post.date_gmt,
-    publish_date,
-    link_url: post.link_url,
-    punk: (hello) => { return hello; },
-    // _post: {...post}
-  }
+const CFUL_BASE_PARAMS = {
+  content_type: '2wKn6yEnZewu2SCCkus4as',
+  order: "-fields.date",
+  limit: 10
 }
 
 export default class PostsAPI {
@@ -53,54 +42,73 @@ export default class PostsAPI {
     this.useCache = useCache;
   }
 
-  async getPostBySlug(id) {
-    return postsApi.get('/posts', {
-      params: { slug: id }
+  async getEntryIds() {
+    if(!this.ids) {
+      console.log("IDs are not cached but could be")
+    }
+
+    const params = Object.assign({}, CFUL_BASE_PARAMS, {
+      select: 'sys.id,fields.date,fields.title',
+      limit: 1000
     })
-    .then(response => {
-      let posts = response.data.map(wpPostToGoodJson);
+
+    return contentful.getEntries(params)
+      .then((idsResponse) => {
+        return idsResponse.items.map(item => item.sys.id)
+      })
+  }
+
+  async getPostById(id) {
+    const params = Object.assign({}, CFUL_BASE_PARAMS, { 
+      limit: 1,
+      'sys.id': id
+    })
+
+    return contentful.getEntries(params)
+    .then((response) => {
+      const posts = response.items.map(formatPost);
 
       return {
-        slug: id,
-        posts,
-        thisPost: posts[0]
+        posts
       }
-    })
-    .catch(err => {
-      console.trace(err);
     })
   }
 
-  async getPosts({ page = 1, per_page = 20 }){
-    return postsApi.get('/posts', {
-      params: { page, per_page }
+  // This is deprecated in favor of sys.id
+  async getPostBySlug(id) {
+    const params = Object.assign({}, CFUL_BASE_PARAMS, { 
+      limit: 1,
+      'fields.slug': id
     })
-    .then(response => {
-      let posts = response.data;
-      let total_posts = parseInt(response.headers['x-wp-total'])
-      let total_pages = parseInt(response.headers['x-wp-totalpages'])
-      return {
-        posts: posts.map(wpPostToGoodJson),
-        total_posts,
-        total_pages,
-        page,
-        per_page
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      let { message, request } = err;
-      let { status } = request || {};
+
+    return contentful.getEntries(params)
+    .then((response) => {
+      const posts = response.items.map(formatPost);
 
       return {
-        posts: [],
-        totalPosts: 0,
-        totalPages: 0,
-        error: {
-          message,
-          status
-        }
+        posts
       }
     })
+  }
+
+  async getPosts({ page = 1, limit = 20 }){
+    const skip = (page - 1) * limit;
+    const params = Object.assign({}, CFUL_BASE_PARAMS, {skip, limit})
+    console.log(params)
+
+    return contentful.getEntries(params)
+      .then(response => {
+        const posts = response.items.map(formatPost);
+        const total_posts = response.total;
+        const total_pages = Math.ceil(total_posts / limit);
+
+        return {
+          posts,
+          page,
+          limit,
+          total_posts,
+          total_pages
+        }
+      })
   }
 }

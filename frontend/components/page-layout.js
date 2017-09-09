@@ -22,44 +22,53 @@ export default class PageLayout extends React.Component {
     }
 
     return (
-      <div className="container">
+      <div className="container site">
         <Head>
           <title>{pageTitle}</title>
           <link href="https://use.typekit.net/hiq1zht.css" rel="stylesheet" type="text/css" />
           <meta name="viewport" content="width=device-width" />
         </Head>
   
-        <div className="site-header">
+        <div className="site-header site__header">
           <Link href="/">
             <a className="logo">
               David Demaree
               <span>Maker of interwebs and fine software</span>
             </a>
           </Link>
-  
-          <SiteNav section={section} />
         </div>
 
-        <div className="site-content">
-        {children}
+        <div className="site-content site__content">
+          {children}
+
+          <div className="site__footer">
+            &copy;2017 David Demaree. I am a person.
+          </div>
         </div>
   
         <style jsx global>{`
-  
-          * {
-            box-sizing: border-box;
+          :root {
+            --inset-padding: 1.5rem;
+            --sidebar-width: 13rem;
           }
-  
+
+          * { box-sizing: border-box; }
           html {
-            font-size: 18px;
+            font-size: 100%;
           }
-  
+          @media (min-width: 1300px) {
+            html {
+              font-size: 112.5%;
+            }
+          }
+
+
           body {
             font-family: 'halyard-text', --apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI', sans-serif;
+            line-height: 1.4;
             margin: 0;
             padding: 0;
           }
-  
           a:link {
             border-style: none none solid none;
             border-width: 0 0 1px 0;
@@ -71,42 +80,49 @@ export default class PageLayout extends React.Component {
             border-style: none none dotted none;
             color: inherit;
           }
-          a:hover {
+          a:link:hover, a:visited:hover {
             background-color: #e5e5e5;
           }
-  
-          h1, h2, h3, h4 {
-            margin: 2em 0 0.5em;
+
+          p {
+            font-family: 'freight-text-pro', Georgia, serif;
           }
-          h1:first-child, h2:first-child {
+          h1, h2, h3, h4, h5, h6 {
+            font-size: inherit;
+            line-height: 1.25;
+          }
+
+          blockquote {
+            border-left: 4px solid #eee;
+            padding: 0 1em;
+            margin: 1em 0;
+            color: #666;
+          }
+          blockquote *:first-child {
             margin-top: 0;
-          }
-          h1, h2 {
-            font-size: 1.5em;
-          }
-          h3, h4 {
-            font-size: 1em;
-          }
-  
-          article {
-            margin: 0 auto;
-            max-width: 42em;
-            padding: 2.5em;
-          }
-          article[class^="archive-"] {
-            padding-bottom: 0;
-          }
-          @media (max-width: 700px) {
-            article {
-              padding: 2.5em 1.5em;
-            }
           }
 
           .container {
-            margin-left: 240px;
+            margin-left: var(--sidebar-width);
             background: #fff;
           }
+
+          .site__header {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            background: #000;
+            color: #fff;
+            padding: 1.5rem;
+            z-index: 10;
   
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+
           .logo:link {
             border: none;
             font-weight: bold;
@@ -127,27 +143,16 @@ export default class PageLayout extends React.Component {
             margin: 0.25em 0 0;
           }
   
-          .site-header {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 240px;
-            background: #000;
-            color: #fff;
-            padding: 1.5em;
-            z-index: 10;
-  
-            display: flex;
-            flex-direction: column;
-            {/* justify-content: space-between; */}
-          }
-  
           .site-social {
             display: none;
           }
-  
-          @media (max-width: 700px) {
+
+          .site__footer {
+            text-align: center;
+            padding-bottom: 2em;
+          }
+
+          @media (max-width: 720px) {
             .container {
               margin-left: 0;
             }

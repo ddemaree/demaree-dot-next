@@ -9,7 +9,7 @@ marked.setOptions({
 });
 
 export default (item) => {
-  const { date, title, body, slug, postFormat } = item.fields;
+  const { date, title, body, slug, postFormat, linkUrl, tags } = item.fields;
   const { id, createdAt, updatedAt } = item.sys;
 
   let body_html;
@@ -24,6 +24,8 @@ export default (item) => {
     body,
     body_html,
     slug,
-    postFormat
+    postFormat,
+    linkUrl,
+    tags
   }
 }

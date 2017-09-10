@@ -3,6 +3,10 @@ const contentful = require('contentful')
 import PostsAPI from '../components/posts-api'
 const postsAPI = PostsAPI.getInstance();
 
+afterEach(() => {
+  contentful.__resetData();
+});
+
 describe("getEntryIds()", ()=>{
   beforeEach(() => {
     contentful.__setResponse({
@@ -20,11 +24,4 @@ describe("getEntryIds()", ()=>{
         expect(ids).toEqual([1,2,3]);
       })
   });
-})
-
-test("something unrelated", ()=>{
-  return postsAPI.getEntryIds()
-    .then(ids => {
-      expect(ids).toEqual([1,2,3]);
-    })
-})
+});

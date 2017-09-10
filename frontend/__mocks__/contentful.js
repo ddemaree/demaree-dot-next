@@ -1,11 +1,4 @@
-
-
 const contentful = jest.genMockFromModule('contentful');
-
-let mockFiles = Object.create(null);
-function __setResponse(data = {}){
-  mockFiles = data;
-}
 
 let mockClient = {
   getEntries() {
@@ -15,6 +8,11 @@ let mockClient = {
 
 const createClient = () => {
   return mockClient;
+}
+
+let mockFiles = Object.create(null);
+const __setResponse = (data = {}) => {
+  mockFiles = data;
 }
 
 const __getData = () => {
@@ -27,7 +25,7 @@ const __resetData = () => {
 
 contentful.__getData = __getData;
 contentful.__setResponse = __setResponse;
+contentful.__resetData = __resetData;
 contentful.createClient = createClient;
-console.log(contentful);
 
 module.exports = contentful;

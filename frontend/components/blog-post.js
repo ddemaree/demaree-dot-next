@@ -43,6 +43,13 @@ const PostDateline = ({ post }) => {
   )
 };
 
+const deOrphanify = (string) => {
+  const parts = string.split(' ');
+  if(parts.length <= 2) return string;
+
+  return string;
+}
+
 const PostHeader = ({slug, title, id}) => (
   <h2 className="phdr phdr--standard">
     <Link href={{pathname: "/posts", query: {id: slug}}}>
@@ -76,7 +83,7 @@ const LinkHeader = ({title, linkUrl}) => {
       }
 
       a:after {
-        content: ' →';
+        content: '\00A0→';
         display: inline;
       }
       `}</style>
@@ -107,7 +114,7 @@ const TagLink = ({tag}) => {
 
   return (
     <Link href={{pathname: '/posts', query: {tag: tagEncoded}}}>
-      <a className="post-tag" key={`post-tag-${tag}`}>#{kebabCase(tag)}</a>
+      <a className="post-tag" key={`post-tag-${tag}`}>#{tag}</a>
     </Link>
   )
 }
@@ -125,11 +132,9 @@ const TagsList = ({tags}) => {
       }
       
       .post__tags :global(a) {
-        background-color: #ccc;
         border: 0;
-        border-radius: 2em;
+        color: #c3c;
         margin-right: 1em;
-        padding: 0.375em 1.25em;
         text-transform: uppercase;
       }  
       `}</style>

@@ -4,8 +4,9 @@ const DEFAULT_KEY = '__DD_POSTS_API__';
 const IS_BROWSER = typeof window !== 'undefined';
 
 // TODO: Does the Cful API support If-Modified-Since?
-import { createClient } from 'contentful'
-import formatPost from 'components/format-post'
+const { createClient } = require('contentful');
+
+import formatPost from './format-post'
 
 const contentful = createClient({
   space: process.env.CFUL_SPACE_ID,
@@ -43,10 +44,6 @@ export default class PostsAPI {
   }
 
   async getEntryIds() {
-    if(!this.ids) {
-      console.log("IDs are not cached but could be")
-    }
-
     const params = Object.assign({}, CFUL_BASE_PARAMS, {
       select: 'sys.id,fields.date,fields.title',
       limit: 1000

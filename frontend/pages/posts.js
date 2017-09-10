@@ -1,14 +1,14 @@
 import React from 'react'
-import PageLayout from 'components/page-layout'
+import PageLayout from '../components/page-layout'
 
-import BlogListing from 'components/blog-listing'
-import BlogPost from 'components/blog-post'
+import BlogListing from '../components/blog-listing'
+import BlogPost from '../components/blog-post'
 
 import { createClient } from 'contentful'
 import moment from 'moment'
 import Link from 'next/link'
 
-import PostsApi from 'components/posts-api'
+import PostsApi from '../components/posts-api'
 const postsApi = PostsApi.getInstance();
 
 const PostsWrapper = ({ children })=>{

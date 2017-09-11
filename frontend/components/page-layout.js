@@ -87,9 +87,9 @@ export default class PageLayout extends React.Component {
             border-style: none none dotted none;
             color: inherit;
           }
-          a:link:hover, a:visited:hover {
+          {/* a:link:hover, a:visited:hover {
             background-color: #e5e5e5;
-          }
+          } */}
 
           p {
             font-family: 'freight-text-pro', Georgia, serif;
@@ -142,7 +142,7 @@ export default class PageLayout extends React.Component {
   
           .logo span {
             display: block;
-            color: #999;
+            color: rgba(255,255,255,0.4);
             font-weight: normal;
             font-family: 'halyard-micro';
             font-size: 0.75em;

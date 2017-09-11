@@ -9,8 +9,31 @@ const NavLink = ({children, href, active, emoji, label}) => {
       <a className={`nav-link ${className}`} onMouseOver={
         (e) => { Router.prefetch(href) }
       }>
-        {emoji}&nbsp;
-        <span>{label}</span>
+        <span className="nav-link__emoji">{emoji}</span>&nbsp;
+        <span className="nav-link__label">{label}</span>
+        <style jsx>{`
+        a.nav-link {
+          display: block;
+          padding: 0.25em 0.5em;
+          text-decoration: none;
+          border-bottom: none;
+          flex-grow: 1;
+        }
+        a.nav-link:hover {
+          background-color: rebeccapurple;
+        }
+        a.nav-link span.nav-link__emoji {
+          display: inline-block;
+          margin-right: 8px;
+          text-align: center;
+          width: 20px;
+        }
+        a.nav-link.active .nav-link__label {
+          font-weight: bold;
+          color: #fff;
+          border-bottom: 1px solid rebeccapurple;
+        }
+        `}</style>
       </a>
     </Link>
   );
@@ -22,28 +45,12 @@ export default ({section}) => (
     <NavLink href="/posts" active={(section == "posts")} emoji="🎉" label="Posts" />
 
     <style jsx>{`
-
     nav {
       display: flex;
       flex-direction: column;
       padding: 0;
       color: #ccc;
-    }
-    nav :global(a) {
-      display: block;
-      padding: 0.25em 0.5em;
-      text-decoration: none;
-      border-bottom: 1px solid var(--border-color);
-    }
-    nav :global(a:hover) {
-      background-color: rebeccapurple;
-    }
-    nav :global(a.active span) {
-      font-weight: bold;
-      color: #fff;
-      border-bottom: 1px solid rebeccapurple;
-    }
-    
+    }    
     `}</style>
   </nav>
 );

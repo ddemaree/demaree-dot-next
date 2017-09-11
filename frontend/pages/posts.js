@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import Head from 'next/head'
 
 import PageLayout from '../components/page-layout'
 import BlogListing from '../components/blog-listing'
@@ -27,36 +28,117 @@ const PostsWrapper = ({ children })=>{
   )
 }
 
-// This could be DRYed out, but isn't hurting anyone
-const PostsLayout = ({children}) => {
+import Link from 'next/link'
+const PostPaginationLink = ({post, direction = 'next', children}) => {
+  if(!post) return null;
+
   return (
-    <PageLayout section="posts">
-      {children}
-    </PageLayout>
+    <Link href={{pathname: '/posts', query: {id: post.id}}}>
+      <a className={`pp-link pp-link--${direction}`}>
+        <div>
+          <span className="pp-link__label">
+            {direction == 'prev' ? "Previous" : "Next"}
+            &nbsp;post:
+          </span>
+          <span className="pp-link__title">{post.title}</span>
+        </div>
+
+        <style jsx>{`
+        .pp-link {
+          display: flex;
+          padding: 1em;
+          border: 0;
+          align-items: center;
+        }
+
+        .pp-link--prev {
+          text-align: left;
+          order: -1;
+        }
+        .pp-link--next {
+          text-align: right;
+          order: 1;
+        }
+
+        .pp-link--prev:before,
+        .pp-link--next:after {
+          display: block;
+          font-size: 2em;
+          width: 1.25em;
+        }
+
+        .pp-link--prev:before {
+          content: '←';
+          display: block;
+        }
+        .pp-link--next:after {
+          content: '→';
+          display: block;
+        }
+
+        .pp-link__label {
+          display: block;
+
+        }
+        `}</style>
+      </a>
+    </Link>
+  )
+}
+
+const PostPagination = ({post, current_index, total_posts}) => {
+  const { prevPost, nextPost } = post;
+
+  return (
+    <div className="post-pagination">
+      <PostPaginationLink post={prevPost} direction='prev' />
+      <PostPaginationLink post={nextPost} direction='next' />
+      <style jsx>{`
+      .post-pagination {
+        border: 1px solid #000;
+        border-width: 1px 0;
+        display: flex;
+        margin: 2em 0 0;
+
+        justify-content: space-between;
+      }
+      .post-pagination:before {
+        content: '';
+        display: block;
+        width: 1px;
+        background-color: #000;
+        order: 0;
+      }
+      `}</style>
+    </div>
   )
 }
 
 export default class extends Component {
-  static async getInitialProps({query, req}){
+  static async getInitialProps({query}){
     const page = query.page || 1;
     const limit = 10;
     const id = query.id || null;
-    let action, getPosts;
+    let action, fetchData;
 
     if(id) {
       action = 'show';
-      getPosts = postsApi.getPostById(id);
+      fetchData = postsApi.getPostWithPrevAndNext(id);
     } else {
       action = 'index';
-      getPosts = postsApi.getPosts({page, limit});
+      fetchData = Promise.all([
+        postsApi.getEntryIds(),
+        postsApi.getPosts({page, limit})
+      ])
+      .then(([ids, response])=>{
+        return Object.assign({}, response, {ids})
+      });
     }
 
-    const [ids, response] = await Promise.all([
-      postsApi.getEntryIds(),
-      getPosts
-    ]);
+    // const ids = [];
+    const response = await fetchData;
 
-    return Object.assign({}, response, {action});
+    return Object.assign({}, response, { action });
   }
 
   render() {
@@ -66,20 +148,24 @@ export default class extends Component {
       case 'show':
         const [ post ] = posts;
         return (
-          <PostsLayout>
+          <PageLayout section="posts">
+            <Head>
+              <title>POST TITLE HERE</title>
+            </Head>
             <PostsWrapper>
               <BlogPost post={post} ids={ids} />
+              <PostPagination {...this.props} post={post} />
             </PostsWrapper>
-          </PostsLayout>
+          </PageLayout>
         )
     
       default:
         return (
-          <PostsLayout>
+          <PageLayout section="posts">
             <PostsWrapper>
               <BlogListing posts={posts} error={error} page={page} total_pages={total_pages} />
             </PostsWrapper>
-          </PostsLayout>
+          </PageLayout>
         )
     }
   }

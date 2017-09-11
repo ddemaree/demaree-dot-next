@@ -8,7 +8,7 @@ marked.setOptions({
   smartypants: true
 });
 
-export default (item) => {
+export default (item = {}, renderHtml = true) => {
   const { date, title, body, slug, postFormat, linkUrl, tags } = item.fields;
   const { id, createdAt, updatedAt } = item.sys;
 

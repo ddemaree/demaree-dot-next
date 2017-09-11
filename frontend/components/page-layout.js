@@ -12,13 +12,22 @@ export default class PageLayout extends React.Component {
 
   render() {
     const { title, section, children } = this.props;
+    const showFooter = typeof this.props.showFooter !== 'undefined' ? this.props.showFooter : true;
 
     let siteTitle = "David’s web site";
-    let pageTitle;
+    let pageTitle, footer;
     if(title){
       pageTitle = `${title} • ${siteTitle}`;
     } else {
       pageTitle = siteTitle;
+    }
+
+    if(showFooter) {
+      footer = (
+        <div className="site__footer">
+          &copy;2017 David Demaree. I am a person.
+        </div>
+      )
     }
 
     return (
@@ -41,10 +50,7 @@ export default class PageLayout extends React.Component {
 
         <div className="site-content site__content">
           {children}
-
-          <div className="site__footer">
-            &copy;2017 David Demaree. I am a person.
-          </div>
+          {footer}
         </div>
   
         <style jsx global>{`
@@ -96,7 +102,7 @@ export default class PageLayout extends React.Component {
           blockquote {
             border-left: 4px solid #eee;
             padding: 0 1em;
-            margin: 1em 0;
+            margin: 1em 0 0 calc(1rem - 4px);
             color: #666;
           }
           blockquote *:first-child {

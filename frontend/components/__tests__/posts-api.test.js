@@ -1,6 +1,6 @@
 const contentful = require('contentful')
 
-import PostsAPI from '../components/posts-api'
+import PostsAPI from '../posts-api'
 const postsAPI = PostsAPI.getInstance();
 
 afterEach(() => {

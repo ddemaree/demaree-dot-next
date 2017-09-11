@@ -3,7 +3,7 @@ import PageLayout from '../components/page-layout'
 import Home from '../components/home'
 
 export default () => (
-  <PageLayout section="home">
+  <PageLayout section="home" showFooter={false}>
     <Home />
   </PageLayout>
 )

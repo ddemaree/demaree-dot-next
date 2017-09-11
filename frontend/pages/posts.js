@@ -1,14 +1,10 @@
-import React from 'react'
-import PageLayout from '../components/page-layout'
+import { Component } from 'react'
 
+import PageLayout from '../components/page-layout'
 import BlogListing from '../components/blog-listing'
 import BlogPost from '../components/blog-post'
 
-import { createClient } from 'contentful'
-import moment from 'moment'
-import Link from 'next/link'
-
-import PostsApi from '../components/posts-api'
+import PostsApi from '../lib/posts-api'
 const postsApi = PostsApi.getInstance();
 
 const PostsWrapper = ({ children })=>{
@@ -31,6 +27,7 @@ const PostsWrapper = ({ children })=>{
   )
 }
 
+// This could be DRYed out, but isn't hurting anyone
 const PostsLayout = ({children}) => {
   return (
     <PageLayout section="posts">
@@ -39,32 +36,27 @@ const PostsLayout = ({children}) => {
   )
 }
 
-class PostsIndex extends React.Component {
+export default class extends Component {
   static async getInitialProps({query, req}){
     const page = query.page || 1;
     const limit = 10;
     const id = query.id || null;
+    let action, getPosts;
+
+    if(id) {
+      action = 'show';
+      getPosts = postsApi.getPostById(id);
+    } else {
+      action = 'index';
+      getPosts = postsApi.getPosts({page, limit});
+    }
 
     const [ids, response] = await Promise.all([
       postsApi.getEntryIds(),
-      postsApi.getPosts({page, limit})
+      getPosts
     ]);
 
-    return Object.assign({}, response);
-  }
-
-  componentDidMount() {
-    // Ok, Next does a good job of passing props to the client as the __NEXT_DATA__ property. If I need to move any data into the client-side instance of the PostsAPI object, I can do so here. 
-    // Note that componentDidMount will only be called once for this page, on its initial load
-    console.log("> Posts page did mount")
-    if(!window.__DD_POSTS_LOADED__) {
-      console.log("First load, should rehydrate from __NEXT_DATA__")
-      window.__DD_POSTS_LOADED__ = true;
-    } else {
-      console.log("Subsequent load")
-    }
-    // console.log(window.__NEXT_DATA__);
-    // console.log(window.__DD_POSTS_API__);
+    return Object.assign({}, response, {action});
   }
 
   render() {
@@ -92,5 +84,3 @@ class PostsIndex extends React.Component {
     }
   }
 }
-
-export default PostsIndex;

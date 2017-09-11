@@ -36,6 +36,7 @@ export default class PageLayout extends React.Component {
               <span>Maker of interwebs and fine software</span>
             </a>
           </Link>
+          <SiteNav section={section} />
         </div>
 
         <div className="site-content site__content">

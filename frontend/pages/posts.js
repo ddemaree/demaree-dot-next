@@ -31,6 +31,14 @@ const PostsWrapper = ({ children })=>{
   )
 }
 
+const PostsLayout = ({children}) => {
+  return (
+    <PageLayout section="posts">
+      {children}
+    </PageLayout>
+  )
+}
+
 class PostsIndex extends React.Component {
   static async getInitialProps({query, req}){
     const page = query.page || 1;
@@ -42,7 +50,21 @@ class PostsIndex extends React.Component {
       postsApi.getPosts({page, limit})
     ]);
 
-    return Object.assign({}, response, {ids});
+    return Object.assign({}, response);
+  }
+
+  componentDidMount() {
+    // Ok, Next does a good job of passing props to the client as the __NEXT_DATA__ property. If I need to move any data into the client-side instance of the PostsAPI object, I can do so here. 
+    // Note that componentDidMount will only be called once for this page, on its initial load
+    console.log("> Posts page did mount")
+    if(!window.__DD_POSTS_LOADED__) {
+      console.log("First load, should rehydrate from __NEXT_DATA__")
+      window.__DD_POSTS_LOADED__ = true;
+    } else {
+      console.log("Subsequent load")
+    }
+    // console.log(window.__NEXT_DATA__);
+    // console.log(window.__DD_POSTS_API__);
   }
 
   render() {
@@ -52,18 +74,20 @@ class PostsIndex extends React.Component {
       case 'show':
         const [ post ] = posts;
         return (
-          <PageLayout section="posts">
-            <BlogPost post={post} ids={ids} />
-          </PageLayout>
+          <PostsLayout>
+            <PostsWrapper>
+              <BlogPost post={post} ids={ids} />
+            </PostsWrapper>
+          </PostsLayout>
         )
     
       default:
         return (
-          <PageLayout section="posts">
+          <PostsLayout>
             <PostsWrapper>
               <BlogListing posts={posts} error={error} page={page} total_pages={total_pages} />
             </PostsWrapper>
-          </PageLayout>
+          </PostsLayout>
         )
     }
   }

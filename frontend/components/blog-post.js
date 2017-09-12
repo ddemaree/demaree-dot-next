@@ -172,7 +172,9 @@ export default ({ post }) => {
           font-family: 'halyard-micro', sans-serif;
         }
         .post__body {
-          max-width: 38em;
+          {/* max-width: 38em; */}
+          flex: 1;
+          flex-basis: 28em;
         }
         .post__body > :global(div > *:first-child) {
           margin-top: 0;
@@ -182,7 +184,7 @@ export default ({ post }) => {
           margin-left: 2rem;
         }
         .post--quote :global(.post__content > blockquote) {
-          font-size: 1.375em;
+          font-size: 1.25em;
           padding: 0;
           border: 0;
         }

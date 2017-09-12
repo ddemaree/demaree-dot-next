@@ -12,11 +12,13 @@ const PostsWrapper = ({ children })=>{
   return (
     <div className="posts-wrapper">
       { children }
+
       <style jsx>{`
       .posts-wrapper {
         margin: 0 auto;
-        max-width: 60em;
+        max-width: 49em;
         padding: 1.25em;
+        padding-top: 4em;
       }
       @media (min-width: 600px) {
         .posts-wrapper {

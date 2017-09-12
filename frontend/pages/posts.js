@@ -36,50 +36,57 @@ const PostPaginationLink = ({post, direction = 'next', children}) => {
     <Link href={{pathname: '/posts', query: {id: post.id}}}>
       <a className={`pp-link pp-link--${direction}`}>
         <div>
-          <span className="pp-link__label">
-            {direction == 'prev' ? "Previous" : "Next"}
-            &nbsp;post:
-          </span>
-          <span className="pp-link__title">{post.title}</span>
+          <div className="pp-link__label">{direction === "prev" ? "Newer" : "Older"}:</div>
+          <div className="pp-link__title">{post.title}</div>
         </div>
 
         <style jsx>{`
         .pp-link {
-          display: flex;
-          padding: 1em;
-          border: 0;
           align-items: center;
+          border: 0;
+          display: flex;
+          padding: 1em 0;
+          flex: 0 0 50%;
+          line-height: 1.125;
+
+          font-family: 'halyard-micro';
+          font-size: 0.625em;
+        }
+
+        .pp-link div {
+          flex-grow: 1;
+          margin: 0 20px;
         }
 
         .pp-link--prev {
-          text-align: left;
+          text-align: right;
           order: -1;
         }
         .pp-link--next {
-          text-align: right;
+          text-align: left;
           order: 1;
+          border-left: 1px solid #999;
         }
 
         .pp-link--prev:before,
         .pp-link--next:after {
+          color: rgba(0,0,0,0.1);
           display: block;
-          font-size: 2em;
+          font-size: 3em;
           width: 1.25em;
+          flex-basis: 1.25em;
         }
-
         .pp-link--prev:before {
           content: '←';
-          display: block;
         }
         .pp-link--next:after {
           content: '→';
-          display: block;
         }
 
         .pp-link__label {
-          display: block;
-
+          text-transform: uppercase;
         }
+
         `}</style>
       </a>
     </Link>
@@ -93,21 +100,15 @@ const PostPagination = ({post, current_index, total_posts}) => {
     <div className="post-pagination">
       <PostPaginationLink post={prevPost} direction='prev' />
       <PostPaginationLink post={nextPost} direction='next' />
+
       <style jsx>{`
       .post-pagination {
-        border: 1px solid #000;
+        border: 1px solid rgba(0,0,0,0.3);
         border-width: 1px 0;
         display: flex;
+        flex-wrap: wrap;
         margin: 2em 0 0;
-
         justify-content: space-between;
-      }
-      .post-pagination:before {
-        content: '';
-        display: block;
-        width: 1px;
-        background-color: #000;
-        order: 0;
       }
       `}</style>
     </div>

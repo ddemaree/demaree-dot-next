@@ -47,9 +47,9 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className="home" ref={(elem) => { this.elem = elem; } }>
-        <div className="home-img" ref={(el) => { this.img = el; }} />
         <div className="home-text slide" ref={(el) => { this.text = el; }}>
-          <p>Hi.</p>
+          <div>Hi.</div>
+          <div>What the hell, dude?</div>
         </div>
 
         <style jsx>{`
@@ -57,45 +57,13 @@ export default class Home extends React.Component {
           background-color: #f0f;
           background-image: linear-gradient(0deg, #f0f, #ffcf00);
         }
-        .slide, .home-text {
+        .home-text {
+          text-shadow: 0 0 60px rgba(0,0,0,0.4);
+          color: #fff;
+          text-align: center;
           display: flex;
           justify-content: center;
           align-items: center;
-          position: relative;
-        }
-        .home-img {
-          background-image: url('/static/images/chicago.jpg');
-          background-size: cover;
-          background-position: center 30%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          z-index: 1;
-          opacity: 0;
-          transition: opacity 5000ms;
-        }
-        .home-img.show {
-          opacity: 0.4;
-        }
-        .home-text {
-          position: relative;
-          z-index: 10;
-          font-weight: 600;
-          text-transform: uppercase;
-          padding: 1em;
-          line-height: 1.75;
-          letter-spacing: 0.1em;
-          font-size: 2.0em;
-          color: #fff;
-          text-shadow: 0 0 60px rgba(0,0,0,0.4);
-          text-align: center;
-          opacity: 0;
-        }
-        .home-text.show {
-          opacity: 1;
-          transition: opacity 5000ms;
         }
         .home-text p {
           margin: 0;

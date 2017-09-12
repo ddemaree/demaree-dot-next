@@ -10,6 +10,37 @@ import Router from 'next/router'
 
 export default class PageLayout extends React.Component {
 
+  componentDidMount() {
+    console.log("MOUNTING")
+    if(window) {
+      document.body.addEventListener('click', this.doThing.bind(this));
+    }
+  }
+
+  componentWillUnmount() {
+    console.log("UNMOUNTING LAYOUT")
+    if(window) {
+      document.body.removeEventListener('click', this.doThing.bind(this));
+    }
+  }
+
+  doThing(event) {
+    // TODO: Only invoke if the menu is open
+    if(!document.body.classList.contains('app--nav-open')) {
+      console.log("Menu is not open")
+      return true;
+    } else {
+      if(event.target.closest('.site__header')) {
+        // This is an ancestor of the site header menu; allow clicks to proceed
+      } else {
+        event.preventDefault();
+        event.stopPropagation();
+        document.body.classList.remove('app--nav-open')
+      }
+    }
+
+  }
+
   render() {
     const { title, section, children } = this.props;
     const showFooter = typeof this.props.showFooter !== 'undefined' ? this.props.showFooter : true;
@@ -38,6 +69,12 @@ export default class PageLayout extends React.Component {
           <meta name="viewport" content="width=device-width" />
         </Head>
   
+        <a onClick={e => {
+          if(document) {
+            document.body.classList.toggle('app--nav-open');
+          }
+        }}>Open menu</a>
+
         <div className="site-header site__header">
           <Link href="/">
             <a className="logo">
@@ -59,22 +96,23 @@ export default class PageLayout extends React.Component {
             --sidebar-width: 13rem;
           }
 
-          * { box-sizing: border-box; }
-          html {
-            font-size: 100%;
-          }
-          @media (min-width: 1300px) {
-            html {
-              font-size: 112.5%;
+          @media (max-width: 900px) {
+            :root {
+              --sidebar-width: 10rem;
             }
           }
 
+          * { box-sizing: border-box; }
+          html {
+            font-size: 18px;
+          }
 
           body {
             font-family: 'halyard-text', --apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI', sans-serif;
             line-height: 1.4;
             margin: 0;
             padding: 0;
+            overflowX: hidden;
           }
           a:link {
             border-style: none none solid none;
@@ -87,9 +125,6 @@ export default class PageLayout extends React.Component {
             border-style: none none dotted none;
             color: inherit;
           }
-          {/* a:link:hover, a:visited:hover {
-            background-color: #e5e5e5;
-          } */}
 
           p {
             font-family: 'freight-text-pro', Georgia, serif;
@@ -110,7 +145,7 @@ export default class PageLayout extends React.Component {
           }
 
           .container {
-            margin-left: var(--sidebar-width);
+            {/* margin-left: var(--sidebar-width); */}
             background: #fff;
           }
 
@@ -118,17 +153,35 @@ export default class PageLayout extends React.Component {
             position: fixed;
             top: 0;
             bottom: 0;
-            left: 0;
-            width: var(--sidebar-width);
+            {/* left: calc(0 - var(--sidebar-width)); */}
+            left: -30%;
+            width: 30%;
             background: #000;
             color: #fff;
             padding: 1.5rem;
             z-index: 10;
+            transition: transform 1s;
   
             display: flex;
             flex-direction: column;
             justify-content: space-between;
           }
+
+          :global(body.app--nav-open .site__header) {
+            transform: translateX(100%);
+          }
+
+          {/* .site__content:before {
+            content: '';
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            position: fixed;
+            pointer-events: none;
+
+          } */}
 
           .logo:link {
             border: none;

@@ -110,11 +110,13 @@ export default class PageLayout extends React.Component {
               </Link>
 
               <SiteNav section={section} />
+
+              <div />
             </div>
           </div>
         </div>
 
-        <main className="site-content site__content main">
+        <main className="main">
           <div className="main__inner">
             {children}
             {footer}
@@ -155,6 +157,7 @@ export default class PageLayout extends React.Component {
 
           a {
             color: inherit;
+            text-decoration: none;
           }
           p {
             font-family: 'freight-text-pro', Georgia, serif;
@@ -233,6 +236,7 @@ export default class PageLayout extends React.Component {
             z-index: 10;
             transition: transform 0.25s, filter 0.25s;
             display: flex;
+            overflow: auto;
           }
 
           @media (min-width: 800px) {
@@ -254,11 +258,12 @@ export default class PageLayout extends React.Component {
           }
 
           .menu__wrapper {
+            font-size: 1.25em;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             pointer-events: auto;
-            padding: 80px 1.5em;
+            padding: 3em 1.5em;
             flex-grow: 1;
           }
 
@@ -267,15 +272,18 @@ export default class PageLayout extends React.Component {
           }
 
           .main__inner {
-            overflow: auto;
+            overflow-x: none;
+            overflow-y: auto;
             position: relative;
             z-index: 1;
             height: 100%;
-            padding-top: 80px;
+            padding-top: 3em;
+            -webkit-overflow-scrolling: touch;
           }
 
           body.app--home .main__inner {
             padding-top: 0;
+            overflow: hidden;
           }
 
           .main:before {
@@ -284,7 +292,7 @@ export default class PageLayout extends React.Component {
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.6);
+            background: linear-gradient(0deg, rgba(255,0,255,0.8), rgba(255,204,0,0.8));
             position: absolute;
             pointer-events: none;
             z-index: 6;
@@ -292,11 +300,7 @@ export default class PageLayout extends React.Component {
             transition: opacity 0.5s;
           }
 
-          body.app--nav-open {
-            overflow: hidden;
-          }
-
-          .app--nav-open .site__content:before {
+          .app--nav-open .main:before {
             opacity: 1;
             pointer-events: auto;
           }
@@ -319,28 +323,6 @@ export default class PageLayout extends React.Component {
             font-size: 0.75em;
             line-height: 1.1;
             margin: 0.25em 0 0;
-          }
-  
-          .site-social {
-            display: none;
-          }
-
-          .site__footer {
-            text-align: center;
-            padding-bottom: 2em;
-          }
-
-          @media (max-width: 720px) {
-            .container {
-              margin-left: 0;
-            }
-            .site-header {
-              position: static;
-              width: auto;
-            }
-            .site-nav {
-              flex-direction: row !important;
-            }
           }
   
         `}</style>

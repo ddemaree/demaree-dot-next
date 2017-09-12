@@ -50,9 +50,12 @@ export default class Home extends React.Component {
         }
         .home-text h1:after {
           display: block;
-          border-bottom: 4px solid white;
+          border-style: solid;
+          border-color: white;
+          border-width: 1px 0;
           content: '';
-          margin: 20px 1em;
+          margin: 40px 1em 20px;
+          height: 4px;
         }
         .home-text p {
           margin: 0;

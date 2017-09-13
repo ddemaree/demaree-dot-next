@@ -2,7 +2,6 @@ import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 
-import SiteHeader from './site-header'
 import SiteNav from './site-nav'
 
 import Router from 'next/router'
@@ -67,9 +66,9 @@ export default class PageLayout extends React.Component {
 
     if(showFooter) {
       footer = (
-        <div className="site__footer">
+        <footer className="site__footer footer">
           &copy;2017 David Demaree. I am a person.
-        </div>
+        </footer>
       )
     }
 
@@ -122,210 +121,6 @@ export default class PageLayout extends React.Component {
             {footer}
           </div>
         </main>
-  
-        <style jsx global>{`
-          :root {
-            --inset-padding: 1.5rem;
-            --sidebar-width: 13rem;
-          }
-
-          body, html, body > div, #__next, #__next > div, .container {
-            height: 100%;
-            overflow: hidden;
-          }
-
-          @media (max-width: 900px) {
-            :root {
-              --sidebar-width: 10rem;
-              --window-height: 100vh;
-              --window-width-offset: 0px;
-            }
-          }
-
-          * { box-sizing: border-box; }
-          html {
-            font-size: 18px;
-          }
-
-          body {
-            font-family: 'halyard-text', --apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI', sans-serif;
-            line-height: 1.4;
-            margin: 0;
-            padding: 0;
-            overflowX: hidden;
-          }
-
-          a {
-            color: inherit;
-            text-decoration: none;
-          }
-          p {
-            font-family: 'freight-text-pro', Georgia, serif;
-          }
-          h1, h2, h3, h4, h5, h6 {
-            font-size: inherit;
-            line-height: 1.25;
-          }
-
-          blockquote {
-            border-left: 4px solid #eee;
-            padding: 0 1em;
-            margin: 1em 0 0 calc(1rem - 4px);
-            color: #666;
-          }
-          blockquote *:first-child {
-            margin-top: 0;
-          }
-
-          .container {
-            background: #fff;
-          }
-
-          .navigation {
-            pointer-events: none;
-            display: inline;
-          }
-
-          .navigation__menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: var(--window-width-offset);
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            z-index: 5;
-            align-items: center;
-            background-color: rgba(255,255,255,0.9);
-          }
-
-          body.app--home .navigation__menu {
-            background: transparent;
-          }
-
-          .menu__close,
-          .navigation__menu__item {
-            font-family: 'halyard-micro', sans-serif;
-            font-weight: bold;
-            pointer-events: auto;
-            width: 120px;
-            height: 3rem;
-            font-size: 0.8rem;
-            line-height: 1;
-            -webkit-appearance: none;
-            background: none;
-            color: inherit;
-            border: 0;
-            border-width: 0;
-            border-style: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-          }
-
-          .navigation .menu {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            right: -100%;
-            width: 100%;
-            background: #000;
-            color: #fff;
-            z-index: 10;
-            transition: transform 0.25s, filter 0.25s;
-            display: flex;
-            overflow: auto;
-          }
-
-          @media (min-width: 800px) {
-            .navigation .menu {
-              width: 50%;
-              right: -50%;
-            }
-          }
-
-          body.app--nav-open .navigation .menu {
-            transform: translateX(-100%);
-          }
-
-          .menu__close {
-            position: absolute;
-            right: 15px;
-            top: 0;
-            z-index: 2;
-          }
-
-          .menu__wrapper {
-            font-size: 1.25em;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: auto;
-            padding: 3em 1.5em;
-            flex-grow: 1;
-          }
-
-          .main {
-            height: 100%;
-          }
-
-          .main__inner {
-            overflow-x: none;
-            overflow-y: auto;
-            position: relative;
-            z-index: 1;
-            height: 100%;
-            padding-top: 3em;
-            -webkit-overflow-scrolling: touch;
-          }
-
-          body.app--home .main__inner {
-            padding-top: 0;
-            overflow: hidden;
-          }
-
-          .main:before {
-            content: '';
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(0deg, rgba(255,0,255,0.8), rgba(255,204,0,0.8));
-            position: absolute;
-            pointer-events: none;
-            z-index: 6;
-            opacity: 0;
-            transition: opacity 0.5s;
-          }
-
-          .app--nav-open .main:before {
-            opacity: 1;
-            pointer-events: auto;
-          }
-
-          .logo:link {
-            border: none;
-            font-weight: bold;
-            padding: 0.5em 0.5em 1em;
-            margin: 0 -0.5em;
-          }
-          .logo:hover {
-            background: transparent;
-          }
-  
-          .logo span {
-            display: block;
-            color: rgba(255,255,255,0.4);
-            font-weight: normal;
-            font-family: 'halyard-micro';
-            font-size: 0.75em;
-            line-height: 1.1;
-            margin: 0.25em 0 0;
-          }
-  
-        `}</style>
       </div>
     )
   } // end render()

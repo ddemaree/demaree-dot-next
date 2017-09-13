@@ -1,6 +1,10 @@
 module.exports = {
-  plugins: [
-    require('postcss-easy-import')({prefix: '_'}), // keep this first
-    require('autoprefixer')({ /* ...options */ }) // so imports are auto-prefixed too
-  ]
-}
+  plugins: {
+    'postcss-import': {},
+    'postcss-cssnext': {
+      browsers: ['last 2 versions', '> 5%'],
+    },
+    'autoprefixer': {},
+    'postcss-nested': {},
+  },
+};

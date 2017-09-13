@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-// const { resolve, join } = require('path');
 
 module.exports = {
   webpack: (config, { dev }) => {
@@ -13,53 +12,38 @@ module.exports = {
           const nextMainEntries = nextEntryObj['main.js'];
           const myMainEntries = [...nextMainEntries, require.resolve('./lib/pack-test.js')]
           const newObj = Object.assign(nextEntryObj, { 
-            'main.js': myMainEntries,
-            'alt.js': [require.resolve('./lib/pack-test.js')]
+            'main.js': myMainEntries
           })
-          // console.log(newObls.j)
           resolve(nextEntryObj);
         })
       })
     }
 
-    // const styleLoaderRule = {
-    //   test: /\.(scss|sass|css)$/i,
-    //   include: [__dirname],
-    //   use: ExtractTextPlugin.extract({
-    //     fallback: 'style-loader',
-    //     use: [
-    //       { loader: 'css-loader', options: { minimize: dev } },
-    //       { loader: 'postcss-loader', options: { sourceMap: true } },
-    //       'resolve-url-loader',
-    //       { loader: 'sass-loader', options: { sourceMap: true } }
-    //     ]
-    //   })
-    // }
+    const styleLoaders = [
+      // 'style-loader',
+      { 
+        loader: 'css-loader',
+        options: { 
+          minimize: dev,
+          importLoaders: 1
+          // modules: true,
+          // localIdentName: "[name]__[local]___[hash:base64:5]"
+        } 
+      },
+      { loader: 'postcss-loader', options: { sourceMap: true } }
+    ]
 
     const styleLoaderRule = {
       test: /\.(scss|sass|css)$/i,
       include: [__dirname],
-      use: [
-        'style-loader',
-        { 
-          loader: 'css-loader',
-          options: { 
-            minimize: dev,
-            importLoaders: 1
-            // modules: true,
-            // localIdentName: "[name]__[local]___[hash:base64:5]"
-          } 
-        },
-        { loader: 'postcss-loader', options: { sourceMap: true } },
-        // 'resolve-url-loader',
-        // { loader: 'sass-loader', options: { sourceMap: true } }
-      ]
+      use: (
+        dev ?
+        styleLoaders : 
+        ExtractTextPlugin.extract({use: styleLoaders})
+      )
     }
 
-    
-
     config.module.rules.push(styleLoaderRule)
-    // console.log(config.module.rules);
 
     // env vars that should be visible to the client must be whitelisted here
     // When running in Docker with local WordPress, need to provide a separate env var for the client-side API since `wordpress` isn't visible outside the container
@@ -80,9 +64,12 @@ module.exports = {
 
     // Extract the CSS into its own file
     // const extractCSSPlugin = new ExtractTextPlugin(dev ? '[name]-[hash].css' : '[name].css');
-    const extractCSSPlugin = new ExtractTextPlugin('[name].css');
-    config.plugins.push(extractCSSPlugin);
-    console.log(config.plugins)
+    if(!dev) {
+      const extractCSSPlugin = new ExtractTextPlugin('[name]-[hash:8].css');
+      config.plugins.push(extractCSSPlugin);
+    }
+
+    console.log(config.output)
 
     return config
   },

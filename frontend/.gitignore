@@ -1,0 +1,9 @@
+wp-content/uploads/*
+.DS_Store
+wp-content/themes/twenty*
+node_modules
+.next
+.vscode
+.env
+sqls/*
+assets

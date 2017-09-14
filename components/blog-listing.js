@@ -47,7 +47,10 @@ const BlogListing = (props) => {
 
   return (
     <div className="blog-posts">
-      <h1>Archives</h1>
+      <header className="blog-header">
+        <h1>Blog</h1>
+        <p>Page {page} of {total_pages}</p>
+      </header>
       {
         posts.map(post => (
           <BlogPost post={post} index={true} key={`index-post-${post.id}`} />
@@ -56,9 +59,18 @@ const BlogListing = (props) => {
       <PostsIndexPagination page={page} total_pages={total_pages}  />
 
       <style jsx>{`
+      .blog-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
       h1 {
-        margin-top: 0;
-        margin-bottom: 1em;
+        margin: 0;
+        font-size: 3em;
+        font-family: 'halyard-display';
+      }
+      .blog-header p {
+        margin-top: 0.5em;
+        margin-bottom: 0;
       }
       .blog-posts > :global(article) {
         padding: 1.5em 0 3em;

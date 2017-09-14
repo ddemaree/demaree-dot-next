@@ -18,7 +18,7 @@ const NavLink = ({children, href, active, emoji, label}) => {
 
 export default ({section}) => (
   <nav className="sitenav">
-    <NavLink href="/about" active={(section == "about")} emoji="👨‍🎤" label="About" />
+    <NavLink href={{pathname: "/pages", query: {id: 'about'}}} active={(section == "about")} emoji="👨‍🎤" label="About" />
     <NavLink href="/posts" active={(section == "posts")} emoji="🎉" label="Posts" />
     <NavLink href="/photos" active={(section == "photos")} emoji="📷" label="Photos" />
     <NavLink href="/places" active={(section == "places")} emoji="🗺" label="Places" />

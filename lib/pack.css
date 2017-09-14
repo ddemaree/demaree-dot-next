@@ -61,7 +61,7 @@ blockquote *:first-child {
     position: fixed;
     top: 0;
     left: 0;
-    right: 15px;
+    right: var(--window-width-offset);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -258,7 +258,7 @@ blockquote *:first-child {
     left: 0;
     right: 0;
     bottom: 0;
-    background: #0009;
+    background: #666c;
     position: absolute;
     pointer-events: none;
     z-index: 6;

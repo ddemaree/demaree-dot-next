@@ -2,21 +2,7 @@ import Link from 'next/link'
 import moment from 'moment'
 import { kebabCase } from 'lodash'
 
-import marked from 'marked'
-marked.setOptions({
-  gfm: true,
-  tables: true,
-  breaks: false,
-  smartypants: true
-});
-
-const MarkdownContent = ({content}) => {
-  const html_content = marked(content);
-
-  return (
-    <div className="post__content post-content md-content" dangerouslySetInnerHTML={{__html: html_content}} />
-  )
-}
+import MarkdownContent from './markdown-content'
 
 const PostDateline = ({ post }) => {
   let date = moment(post.date);
@@ -114,7 +100,7 @@ const TagLink = ({tag}) => {
 
   return (
     <Link href={{pathname: '/posts', query: {tag: tagEncoded}}}>
-      <a className="post-tag" key={`post-tag-${tag}`}>#{tag}</a>
+      <a className="post-tag">#{tag}</a>
     </Link>
   )
 }
@@ -124,7 +110,7 @@ const TagsList = ({tags}) => {
 
   return (
     <div className="post__tags">
-      { tags.map(tag => <TagLink tag={tag} />) }
+      { tags.map(tag => <TagLink tag={tag} key={`post-tag-${tag}`} />) }
       <style jsx>{`
       .post__tags {
         font-size: 0.8em;
@@ -153,7 +139,7 @@ export default ({ post }) => {
       </header>
       <div className="post__body">
         { getHeaderForPost(post) }
-        <MarkdownContent content={body} />
+        <MarkdownContent classNames={['post__content', 'post-content']} content={body} />
         <TagsList tags={tags} />
         {/*  */}
       </div>

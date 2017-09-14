@@ -34,10 +34,11 @@
     "wordcount": "^1.1.1"
   },
   "scripts": {
-    "start": "next start",
+    "start": "node index.js",
     "dev": "node index.js",
     "build": "next build",
-    "test": "jest"
+    "test": "jest",
+    "__deploy": "rm -fr .next && now && now alias"
   },
   "devDependencies": {
     "babel-jest": "^21.0.2",

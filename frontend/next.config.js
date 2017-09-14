@@ -5,7 +5,6 @@ require('dotenv').config()
 
 module.exports = {
   webpack: (config, { dev }) => {
-    const extractCss = !dev;
 
     // Decorate Next's entry function with a file of our own
     const nextEntry = config.entry;
@@ -23,7 +22,9 @@ module.exports = {
       })
     }
 
+    const extractCss = !dev;
     const styleLoaders = [
+      'style-loader',
       { 
         loader: 'css-loader',
         options: { 

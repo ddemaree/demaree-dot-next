@@ -12,9 +12,7 @@ export default class MyDocument extends Document {
   }
 
   render() {
-    const { __NEXT_DATA__ } = this.props;
-    const { dev, buildId } = __NEXT_DATA__;
-    
+    const { dev } = this.props;
     let cssLinkTag;
     if(!dev) {
       const cssUrl = ["", "_assets", buildId, "main.css"].join("/")
@@ -27,7 +25,6 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <link href="https://use.typekit.net/hiq1zht.css" rel="stylesheet" type="text/css" />
-          {/* <link href="//localhost:4000/_next/webpack/main.js.css" rel="stylesheet" type="text/css" /> */}
           {cssLinkTag}
           <meta name="viewport" content="width=device-width" />
         </Head>

@@ -29,9 +29,22 @@ const app = next({
 const handle = app.getRequestHandler()
 let server
 
+const { join } = require('path')
+
 app.prepare()
 .then(db => {
   server = express();
+  console.log(db);
+
+  // Handle serving root-level webpacked assets in production
+  // All of Next's JS will be handled by its routes, so really
+  // this is just for the production version of global CSS
+  // (In dev mode, this is handled by style tag injection)
+  server.get('/_assets/:buildId/:path*', (req, res) => {
+    const { path } = req.params;
+    const filePath = join(app.dir, app.dist, path);
+    return res.sendFile(filePath)
+  })
 
   server.get('/posts/:year/:slug', (req, res) => {
     const { slug } = req.params;

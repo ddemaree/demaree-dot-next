@@ -34,7 +34,6 @@ const { join } = require('path')
 app.prepare()
 .then(db => {
   server = express();
-  console.log(db);
 
   // Handle serving root-level webpacked assets in production
   // All of Next's JS will be handled by its routes, so really
@@ -69,7 +68,6 @@ app.prepare()
       throw err
     }
     console.log('> Ready on http://localhost:' + process.env.PORT + ' [' + process.env.NODE_ENV + ']')
-    console.log(`Posts API is at ${process.env.POSTS_API}`)
   })
 })
 .catch(err => {

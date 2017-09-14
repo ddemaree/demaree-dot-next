@@ -13,7 +13,6 @@ export default class MyDocument extends Document {
 
   render() {
     const { __NEXT_DATA__ } = this.props;
-    console.log(__NEXT_DATA__);
     const { dev, buildId } = __NEXT_DATA__;
     
     let cssLinkTag;

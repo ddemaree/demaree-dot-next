@@ -1,5 +1,3 @@
-console.log("I am pack-test.js, and I should be part of the main bundle")
-
 require('./pack.css');
 
 /*

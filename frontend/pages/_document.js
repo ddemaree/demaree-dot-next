@@ -12,7 +12,9 @@ export default class MyDocument extends Document {
   }
 
   render() {
-    const { dev } = this.props;
+    const { dev, __NEXT_DATA__ } = this.props;
+    const { buildId } = __NEXT_DATA__;
+
     let cssLinkTag;
     if(!dev) {
       const cssUrl = ["", "_assets", buildId, "main.css"].join("/")

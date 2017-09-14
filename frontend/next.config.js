@@ -3,6 +3,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   webpack: (config, { dev }) => {
+    const extractCss = !dev;
+
     // Decorate Next's entry function with a file of our own
     const nextEntry = config.entry;
     config.entry = () => {
@@ -14,21 +16,18 @@ module.exports = {
           const newObj = Object.assign(nextEntryObj, { 
             'main.js': myMainEntries
           })
-          resolve(nextEntryObj);
+          resolve(newObj);
         })
       })
     }
 
     const styleLoaders = [
-      // 'style-loader',
       { 
         loader: 'css-loader',
         options: { 
           minimize: dev,
           importLoaders: 1
-          // modules: true,
-          // localIdentName: "[name]__[local]___[hash:base64:5]"
-        } 
+        }
       },
       { loader: 'postcss-loader', options: { sourceMap: true } }
     ]
@@ -37,9 +36,9 @@ module.exports = {
       test: /\.(scss|sass|css)$/i,
       include: [__dirname],
       use: (
-        dev ?
-        styleLoaders : 
-        ExtractTextPlugin.extract({use: styleLoaders})
+        extractCss ?
+        ExtractTextPlugin.extract({use: styleLoaders}) :
+        styleLoaders
       )
     }
 
@@ -63,13 +62,14 @@ module.exports = {
     config.plugins.push(defines);
 
     // Extract the CSS into its own file
-    // const extractCSSPlugin = new ExtractTextPlugin(dev ? '[name]-[hash].css' : '[name].css');
-    if(!dev) {
-      const extractCSSPlugin = new ExtractTextPlugin('[name]-[hash:8].css');
+    if(extractCss) {
+      const extractCSSPlugin = new ExtractTextPlugin({
+        filename: (getPath) => {
+          return getPath('[name].css').replace('.js', '');
+        }
+      });
       config.plugins.push(extractCSSPlugin);
     }
-
-    console.log(config.output)
 
     return config
   },

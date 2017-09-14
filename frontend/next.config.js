@@ -24,7 +24,6 @@ module.exports = {
 
     const extractCss = !dev;
     const styleLoaders = [
-      'style-loader',
       { 
         loader: 'css-loader',
         options: { 
@@ -41,7 +40,7 @@ module.exports = {
       use: (
         extractCss ?
         ExtractTextPlugin.extract({use: styleLoaders}) :
-        styleLoaders
+        ['style-loader', ...styleLoaders]
       )
     }
 

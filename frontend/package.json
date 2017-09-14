@@ -37,8 +37,7 @@
     "start": "node index.js",
     "dev": "node index.js",
     "build": "next build",
-    "test": "jest",
-    "__deploy": "rm -fr .next && now && now alias"
+    "test": "jest"
   },
   "devDependencies": {
     "babel-jest": "^21.0.2",

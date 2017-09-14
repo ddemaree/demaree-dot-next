@@ -4,6 +4,8 @@
   --default-fonts: 'halyard-text', --apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI', sans-serif;
   --serif-fonts: 'freight-text-pro', Georgia, serif;
   --micro-fonts: 'halyard-micro', --apple-system, BlinkMacSystemFont, Verdana, sans-serif;
+
+  --big-desktop-breakpoint: (min-width)
 }
 
 body, html, body > div, #__next, #__next > div, .container {
@@ -59,47 +61,89 @@ blockquote *:first-child {
     position: fixed;
     top: 0;
     left: 0;
-    right: var(--window-width-offset);
+    right: 15px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     z-index: 5;
     align-items: center;
-    background-color: #fffc;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+
+    @media (min-width: 1100px) {
+      display: none;
+    }
   }
 
   body.app--home &__menu {
     background: transparent;
+    border-color: transparent;
+    .label {
+      color: #0009;
+    }
   }
 }
 
 .menu__close,
-.navigation__menu__item {
-  font-family: var(--micro-fonts);
-  font-weight: bold;
-  pointer-events: auto;
-  width: 120px;
-  height: 3rem;
-  font-size: 0.8rem;
-  line-height: 1;
-  -webkit-appearance: none;
+.navigation__menu__item,
+.navitem {
+  align-items: center;
   background: none;
-  color: inherit;
   border: 0;
-  border-width: 0;
   border-style: none;
+  border-width: 0;
+  color: inherit;
   cursor: pointer;
   display: flex;
-  align-items: center;
+  font-family: var(--micro-fonts);
+  font-size: 0.8rem;
   justify-content: center;
+  line-height: 1;
+  pointer-events: auto;
   text-decoration: none;
+  text-transform: uppercase;
+  -webkit-appearance: none;
+  height: 60px;
+  padding: 0.5em 1em;
+
+  .emoji {
+    font-size: 1.5em;
+    margin-right: 0.25em;
+    margin-top: 0.15em;
+  }
+
+  &--null, &--burger {
+    flex-basis: 100px;
+  }
+  &--logo {
+    margin-left: 1em;
+    margin-right: 1em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 500px) {
+    &--logo .label span {
+      display: none;
+    }  
+  }
+  @media (max-width: 600px) {
+    &--logo .emoji {
+      display: none;
+    }
+    &--null, &--burger {
+      flex-basis: 60px;
+      .label {
+        display: none;
+      }
+    }
+  }
 }
 
 .navigation .menu {
   position: fixed;
   top: 0;
   bottom: 0;
-  right: -100%;
+  left: -100%;
   width: 100%;
   background: #000;
   color: #fff;
@@ -109,39 +153,54 @@ blockquote *:first-child {
   overflow: auto;
 
   @media (min-width: 800px) {
-    width: 50%;
-    right: -50%;
+    width: 30%;
+    left: -30%;
   }
 
-  body.app--nav-open & {
-    transform: translateX(-100%);
+  .app--nav-open & {
+    transform: translateX(100%);
+  }
+
+  @media (min-width: 1100px) {
+    left: 0;
+    width: 25%;
   }
 }
 
 .menu__close {
   position: absolute;
-  right: 15px;
+  left: 0;
   top: 0;
   z-index: 2;
+  @media (min-width: 1100px) {
+    display: none;
+  }
 }
 
 .menu__wrapper {
-  font-size: 1.25em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   pointer-events: auto;
-  padding: 3em 1.5em;
   flex-grow: 1;
+  padding-top: 60px;
+
+  @media (min-width: 1100px) {
+    padding-top: 0;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    height: 1em;  
+  }
 }
 
 .menu .logo {
-  &:link {
-    border: none;
-    font-weight: bold;
-    padding: 0.5em 0.5em 1em;
-    margin: 0 -0.5em;
-  }
+  border: none;
+  display: block;
+  font-weight: bold;
+  padding: 1.5em 30px 0;
 
   &:hover {
     background: transparent;
@@ -159,40 +218,36 @@ blockquote *:first-child {
 }
 
 .menu nav {
+  color: #999;
   display: flex;
   flex-direction: column;
-  padding: 0;
-  color: #ccc;
 
-  a.nav-link {
-    border: 1px solid rebeccapurple;
-    border-radius: 4px;
-    display: block;
-    flex-grow: 1;
-    margin: 0.25em 0;
-    padding: 0.5em;
-    text-decoration: none;
+  .navitem {
+    justify-content: flex-start;
+    // background: #ccc;
+    padding: 0 30px;
 
-    &:hover {
-      background-color: rebeccapurple;
+    .emoji {
+      flex-basis: 1.375em;
+    }
+    .label {
+      padding: 0.5em 0;
     }
 
-    .nav-link__emoji {
-      display: inline-block;
-      margin-right: 8px;
-      text-align: center;
-      width: 1.75em;
+    @media (hover) {
+      &:hover {
+        background: linear-gradient(0deg, #333, #111);
+      }
     }
 
-    &.active .nav-link__label {
+    &--active {
       color: #fff;
-      font-weight: bold;
-      text-transform: uppercase;
+      .label {
+        border-bottom: 1px solid #ccc;
+      }
     }
   }
 }
-
-
 
 .main {
   height: 100%;
@@ -215,6 +270,10 @@ blockquote *:first-child {
       pointer-events: auto;
     }
   }
+
+  @media (min-width: 1100px) {
+    margin-left: 25%;
+  }
 }
 
 .main__inner {
@@ -223,15 +282,19 @@ blockquote *:first-child {
   position: relative;
   z-index: 1;
   height: 100%;
-  padding-top: 3em;
+  padding-bottom: 3em;
+  padding-top: calc(61px + 1.5em);
   -webkit-overflow-scrolling: touch;
+
+  @media (min-width: 1100px) {
+    padding-top: 1.5em;
+  }
 
   body.app--home & {
     padding-top: 0;
     overflow: hidden;
   }
 }
-
 
 .footer {
   padding: 1em 0;

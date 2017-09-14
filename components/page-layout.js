@@ -77,17 +77,27 @@ export default class PageLayout extends React.Component {
 
         <div className="site-header site__header navigation">
           <div className="navigation__menu">
-            <Link href="/">
-              <a className="navigation__menu__item navigation__menu__item--logo">
-                <span>🏠&nbsp;&nbsp;Home</span>
-              </a>
-            </Link>
-
             <button className="navigation__menu__item navigation__menu__item--burger" onClick={e => {
               if(document) {
                 document.body.classList.toggle('app--nav-open');
               }
-            }}><span>🍔&nbsp;&nbsp;Menu</span></button>
+            }}>
+              <span className="emoji">🍔</span>
+              <span className="label">Menu</span>
+            </button>
+
+            <Link href="/">
+              <a className="navigation__menu__item navigation__menu__item--logo">
+              <span className="emoji">🏠</span>
+              <span className="label">
+                <b>David Demaree</b>
+                <span>’s web site</span>
+              </span>
+              </a>
+            </Link>
+
+            <div className="navigation__menu__item navigation__menu__item--null"></div>
+
           </div>
           <div className="menu">
             <button className="menu__close" onClick={e => {
@@ -95,7 +105,8 @@ export default class PageLayout extends React.Component {
                 document.body.classList.toggle('app--nav-open');
               }
               }}>
-              <span>🙈&nbsp;&nbsp;Close</span>
+              <span className="emoji">🙈</span>
+              <span className="label">Close</span>
             </button>
             <div className="menu__wrapper">
               <Link href="/">

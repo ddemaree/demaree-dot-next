@@ -49,7 +49,6 @@ class PostsAPI {
   async getEntryIds() {
     if(IS_BROWSER && window.__DD_CACHE__){
       const { ids } = __DD_CACHE__;
-      console.log(ids);
       return Promise.resolve(ids);
     }
 

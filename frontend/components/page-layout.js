@@ -9,7 +9,6 @@ Router.onRouteChangeStart = url => {
   document.body.classList.add('app--route-pending')
 }
 Router.onRouteChangeComplete = url => {
-  console.log('App changed to: ', url)
   document.body.classList.remove('app--nav-open')
   document.body.classList.remove('app--route-pending')
 }
@@ -20,10 +19,8 @@ function getWindowWidthOffset(){
   const { body } = document;
   const main = document.getElementsByClassName('main__inner')[0];
   if(main) {
-    console.log(main);
     const bodyClientWidth   = body.clientWidth;
     const mainClientWidth   = parseInt(main.clientWidth);
-    console.log(body.clientWidth, main.clientWidth);
     const windowWidthOffset = (bodyClientWidth - mainClientWidth);
     body.style.setProperty('--window-width-offset', `${windowWidthOffset}px`);
   }

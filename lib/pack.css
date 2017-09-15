@@ -53,6 +53,11 @@ blockquote *:first-child {
   background: #fff;
 }
 
+.site--dark {
+  background: #000;
+  color: #fff;
+}
+
 .navigation {
   pointer-events: none;
   display: inline;
@@ -69,6 +74,11 @@ blockquote *:first-child {
     align-items: center;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
+
+    .site--dark & {
+      background-color: #000;
+      border-color: #000;
+    }
 
     @media (min-width: 1100px) {
       display: none;
@@ -293,6 +303,12 @@ blockquote *:first-child {
   body.app--home & {
     padding-top: 0;
     overflow: hidden;
+  }
+  .site--fullbleed & {
+    padding-top: 61px;
+    @media (min-width: 1100px) {
+      padding-top: 0;
+    }
   }
 }
 

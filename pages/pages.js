@@ -72,14 +72,14 @@ export default class extends React.Component {
     let headingStyle = {};
     if(headingImage) {
       headingStyle = {
-        backgroundImage: `url('${headingImage.file.url}?fit=crop&w=1600&h=1200')`,
+        backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.9)), url('${headingImage.file.url}?w=1600')`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center top'
+        backgroundPosition: 'center 36%'
       }
     }
 
     return (
-      <PageLayout section="about">
+      <PageLayout section="about" className="site--dark site--fullbleed">
         <div className={`page page--${slug}`}>
           <header className={`page__heading ${headingImage ? 'page__heading--image' : ''}`} style={headingStyle}>
             <h1>{title}</h1>
@@ -104,15 +104,24 @@ export default class extends React.Component {
 
         .page__heading--image {
           color: #fff;
-          margin-top: -1.5rem;
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 160px;
+          height: 200px;
+          flex-direction: column;
         }
 
         .page__heading h1 {
           margin: 0;
+          width: 100%;
+        }
+
+        .page__heading h1:after {
+          content: '';
+          display: block;
+          border-bottom: 2px solid;
+          width: 20%;
+          margin: 1rem auto 0;
         }
 
         `}</style>

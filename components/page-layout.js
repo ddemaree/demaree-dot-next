@@ -76,7 +76,7 @@ export default class PageLayout extends React.Component {
     }
 
     return (
-      <div className="container site">
+      <div className={`container site ${this.props.className}`}>
         <Head>
           <title>{pageTitle}</title>
         </Head>

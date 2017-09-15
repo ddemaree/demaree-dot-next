@@ -3,6 +3,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 import SiteNav from './site-nav'
+import DDIcon from './svg/dd-icon.svg'
+import GitHubIcon from './svg/github-icon.svg'
+import TwitterIcon from './svg/twitter-icon.svg'
+import LinkedinIcon from './svg/linkedin-icon.svg'
+import EmailIcon from './svg/email-icon.svg'
 
 import Router from 'next/router'
 Router.onRouteChangeStart = url => {
@@ -48,7 +53,7 @@ export default class PageLayout extends React.Component {
 
   handleMenuClick(event) {
     if(!document.body.classList.contains('app--nav-open')) return true;
-    if(event.target.closest('.navigation')) return true;
+    if(event.target.closest('.menu')) return true;
     
     event.preventDefault();
     event.stopPropagation();
@@ -117,14 +122,40 @@ export default class PageLayout extends React.Component {
             <div className="menu__wrapper">
               <Link href="/">
                 <a className="logo">
-                  David Demaree
-                  <span>Maker of interwebs and fine software</span>
+                  <div className="icon">
+                    <DDIcon />
+                  </div>
+                  <div className="caption">
+                    <b>David Demaree</b>
+                    <span>Maker of interwebs and fine&nbsp;software</span>
+                  </div>
                 </a>
               </Link>
 
               <SiteNav section={section} />
 
-              <div />
+              <div className="social">
+                <a href="mailto:david@demaree.me?subject=sup" className="social__link social__link--email">
+                  <span className="label">Email me</span>
+                  <span className="icon"><EmailIcon /></span>
+                </a>
+
+                <a href="https://twitter.com/ddemaree" className="social__link social__link--twitter">
+                  <span className="label">Twitter</span>
+                  <span className="icon"><TwitterIcon /></span>
+                </a>
+
+                <a href="https://github.com/ddemaree" className="social__link social__link--github">
+                  <span className="label">GitHub</span>
+                  <span className="icon"><GitHubIcon /></span>
+                </a>
+
+                <a href="https://linkedin.com/in/ddemaree" className="social__link social__link--linkedin">
+                  <span className="label">LinkedIn</span>
+                  <span className="icon"><LinkedinIcon /></span>
+                </a>
+
+              </div>
             </div>
           </div>
         </div>

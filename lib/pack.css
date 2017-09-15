@@ -1,11 +1,16 @@
+
+/* Breakpoints defined as custom media rules */
+@custom-media --big-desktop-breakpoint (min-width: 1100px);
+
 :root {
+  /* Defaults for window height and offset; these should be replaced on body by JS */
   --window-height: 100vh;
   --window-width-offset: 0px;
+
+  /* Font stacks! */
   --default-fonts: 'halyard-text', --apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, 'Segoe UI', sans-serif;
   --serif-fonts: 'freight-text-pro', Georgia, serif;
   --micro-fonts: 'halyard-micro', --apple-system, BlinkMacSystemFont, Verdana, sans-serif;
-
-  --big-desktop-breakpoint: (min-width)
 }
 
 body, html, body > div, #__next, #__next > div, .container {
@@ -53,34 +58,34 @@ blockquote *:first-child {
   background: #fff;
 }
 
-.site--dark {
+.theme--dark {
   background: #000;
   color: #fff;
 }
 
 .navigation {
   pointer-events: none;
-  display: inline;
 
   &__menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: var(--window-width-offset);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    z-index: 5;
+    color: #999;
     align-items: center;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    left: 0;
+    position: fixed;
+    right: var(--window-width-offset);
+    top: 0;
+    z-index: 5;
 
-    .site--dark & {
+    .theme--dark & {
       background-color: #000;
       border-color: #000;
     }
 
-    @media (min-width: 1100px) {
+    @media (--big-desktop-breakpoint) {
       display: none;
     }
   }
@@ -90,6 +95,25 @@ blockquote *:first-child {
     border-color: transparent;
     .label {
       color: #0009;
+    }
+  }
+
+  &:after {
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0009;
+    position: absolute;
+    pointer-events: none;
+    z-index: 6;
+    opacity: 0;
+    transition: opacity 0.5s;
+
+    .app--nav-open & {
+      opacity: 1;
+      pointer-events: auto;
     }
   }
 }
@@ -162,16 +186,16 @@ blockquote *:first-child {
   display: flex;
   overflow: auto;
 
-  @media (min-width: 800px) {
-    width: 30%;
-    left: -30%;
+  @media (min-width: 700px) {
+    width: 50%;
+    left: -50%;
   }
 
   .app--nav-open & {
     transform: translateX(100%);
   }
 
-  @media (min-width: 1100px) {
+  @media (--big-desktop-breakpoint) {
     left: 0;
     width: 25%;
   }
@@ -182,7 +206,7 @@ blockquote *:first-child {
   left: 0;
   top: 0;
   z-index: 2;
-  @media (min-width: 1100px) {
+  @media (--big-desktop-breakpoint) {
     display: none;
   }
 }
@@ -195,35 +219,54 @@ blockquote *:first-child {
   flex-grow: 1;
   padding-top: 60px;
 
-  @media (min-width: 1100px) {
+  @media (--big-desktop-breakpoint) {
     padding-top: 0;
-  }
-
-  &:after {
-    content: '';
-    display: block;
-    height: 1em;  
   }
 }
 
 .menu .logo {
   border: none;
-  display: block;
   font-weight: bold;
   padding: 1.5em 30px 0;
+  display: flex;
 
   &:hover {
     background: transparent;
   }
 
+  .icon {
+    margin-right: 16px;
+    flex-basis: 54px;
+
+    svg {
+      width: 100%;
+    }
+  }
+
+  .caption {
+    flex: 1;
+  }
+
+  .dd-seal {
+    .circle {
+      fill: #fff3;
+    }
+    .letters {
+      fill: white;
+    }
+    .lines {
+      stroke: white;
+    }
+  }
+
   span {
     display: block;
-    color: #fff6;
+    color: #fff9;
     font-weight: normal;
     font-family: var(--micro-fonts);
-    font-size: 0.75em;
-    line-height: 1.1;
-    margin: 0.25em 0 0;
+    font-size: 0.7em;
+    line-height: 1.2;
+    margin: 4px 0 0;
   }
 }
 
@@ -234,7 +277,6 @@ blockquote *:first-child {
 
   .navitem {
     justify-content: flex-start;
-    // background: #ccc;
     padding: 0 30px;
 
     .emoji {
@@ -259,29 +301,84 @@ blockquote *:first-child {
   }
 }
 
+.menu .social {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  padding-left: 20px;
+  padding-right: 36px;
+  padding-bottom: 40px;
+  padding-top: 20px;
+  align-items: center;
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff6;
+
+    @media (hover) {
+      &:hover {
+        color: #fff;
+
+        .label {
+          visibility: visible;
+        }
+      }
+    }
+
+    .icon {
+      line-height: 0.8em;
+    }
+    .icon svg {
+      margin: 0;
+      width: 20px;
+      height: 20px;
+    }
+    .label {
+      font-family: var(--micro-fonts);
+      font-size: 0.5em;
+      white-space: nowrap;
+      margin-bottom: 4px;
+      visibility: hidden;
+    }
+
+    @media (min-width: 800px) {
+      .label {
+        display: block;
+      }
+    }
+  }
+}
+
 .main {
+  --body-color: #000c;
+  --link-color: var(--body-color);
+
+  color: var(--body-color);
   height: 100%;
 
-  &:before {
-    content: '';
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #666c;
-    position: absolute;
-    pointer-events: none;
-    z-index: 6;
-    opacity: 0;
-    transition: opacity 0.5s;
+  .theme--dark & {
+    --body-color: #fffc;
+    --link-color: #fff;
+  }
 
-    .app--nav-open & {
-      opacity: 1;
-      pointer-events: auto;
+  a:link, a:visited {
+    --magic-underline-col-a: rgba(0,0,0,.6);
+    --magic-underline-col-b: rgba(0,0,0,0);
+    background-image: linear-gradient(to bottom, var(--magic-underline-col-a) 50%, var(--magic-underline-col-b) 50%);
+    background-position: 0 1.16em;
+    background-size: 2px .2em;
+    background-repeat: repeat-x;
+    color: var(--link-color);
+
+    .theme--dark & {
+      --magic-underline-col-a: #fff9;
+      --magic-underline-col-b: #fff0;
     }
   }
 
-  @media (min-width: 1100px) {
+  @media (--big-desktop-breakpoint) {
     margin-left: 25%;
   }
 }
@@ -313,6 +410,33 @@ blockquote *:first-child {
 }
 
 .footer {
+  font-family: var(--micro-fonts);
+  font-size: 0.8em;
   padding: 1em 0;
   text-align: center;
+  text-transform: uppercase;
+}
+
+.photo, .photo--left {
+  width: 50%;
+  min-width: 200px;
+
+  img, source {
+    max-width: 100%;
+  }
+
+  &--third {
+    width: 36%;
+  }
+
+  &--left {
+    float: left;
+    margin: 1em 1em 1em 0;
+  }
+
+  @media (max-width: 400px) {
+    width: auto;
+    float: none !important;
+    margin: 1.5em auto !important;
+  }
 }

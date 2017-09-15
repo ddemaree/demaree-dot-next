@@ -33,6 +33,7 @@ marked.setOptions({
 });
 
 const PageModule = ({ page, module }) => {
+  console.log(module);
   const { title, body } = module;
   const modSlug = `pm-${page.slug}-${module._id}`
 
@@ -79,7 +80,7 @@ export default class extends React.Component {
     }
 
     return (
-      <PageLayout section="about" className="site--dark site--fullbleed">
+      <PageLayout section="about" className="theme--dark site--fullbleed">
         <div className={`page page--${slug}`}>
           <header className={`page__heading ${headingImage ? 'page__heading--image' : ''}`} style={headingStyle}>
             <h1>{title}</h1>

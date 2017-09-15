@@ -71,18 +71,20 @@ export default class extends React.Component {
     const moduleTags = modules.map(m => <PageModule page={this.props} module={m} key={`pm-${m._id}`} />)
 
     let headingStyle = {};
+    let layoutClassNames = [];
     if(headingImage) {
       headingStyle = {
-        backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.3), rgba(0,0,0,0.9)), url('${headingImage.file.url}?w=1600')`,
+        backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.2)), url('${headingImage.file.url}?w=1600')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center 36%'
       }
+      layoutClassNames.push('site--fullbleed')
     }
 
     return (
-      <PageLayout section="about" className="theme--dark site--fullbleed">
+      <PageLayout section="about" className={layoutClassNames.join(' ')}>
         <div className={`page page--${slug}`}>
-          <header className={`page__heading ${headingImage ? 'page__heading--image' : ''}`} style={headingStyle}>
+          <header className={`page__heading ${(headingImage) ? 'page__heading--image' : ''}`} style={headingStyle}>
             <h1>{title}</h1>
           </header>
 
@@ -98,9 +100,9 @@ export default class extends React.Component {
 
         .page__heading {
           text-align: center;
-          font-family: 'halyard-display';
-          font-weight: bold;
+          font-weight: 700;
           font-size: 2em;
+          font-family: var(--display-fonts);
         }
 
         .page__heading--image {
@@ -108,8 +110,9 @@ export default class extends React.Component {
           display: flex;
           align-items: center;
           justify-content: center;
-          height: 200px;
+          height: 160px;
           flex-direction: column;
+          text-shadow: 0 0 20px #000;
         }
 
         .page__heading h1 {

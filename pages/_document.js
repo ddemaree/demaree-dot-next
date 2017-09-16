@@ -23,9 +23,15 @@ export default class MyDocument extends Document {
       )
     }
 
+
     return (
       <html>
         <Head>
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-556801-4" />
+          <script dangerouslySetInnerHTML={{__html: `window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+  gtag('config', 'UA-556801-4');`}} />
           <link href="https://use.typekit.net/hiq1zht.css" rel="stylesheet" type="text/css" />
           {cssLinkTag}
           <meta name="viewport" content="width=device-width" />

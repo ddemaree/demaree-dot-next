@@ -9,6 +9,9 @@ Router.onRouteChangeStart = url => {
   document.body.classList.add('app--route-pending')
 }
 Router.onRouteChangeComplete = url => {
+  console.log("Tracking url ", url)
+  gtag('config', 'UA-556801-4', {'page_path': url});
+
   const elem = document.querySelector('.main__inner');
   if(elem) {
     elem.scrollTop = 0;

@@ -38,9 +38,7 @@ const deOrphanify = (string) => {
 
 const PostHeader = ({slug, title, id}) => (
   <h2 className="phdr phdr--standard">
-    <Link href={{pathname: "/posts", query: {id: slug}}}>
-      <a dangerouslySetInnerHTML={{__html: title}} />
-    </Link>
+    <span dangerouslySetInnerHTML={{__html: title}} />
     <style jsx>{`
       h2 {
         font-weight: 300;

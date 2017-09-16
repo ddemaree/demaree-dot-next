@@ -33,7 +33,6 @@ marked.setOptions({
 });
 
 const PageModule = ({ page, module }) => {
-  console.log(module);
   const { title, body } = module;
   const modSlug = `pm-${page.slug}-${module._id}`
 
@@ -59,8 +58,8 @@ export default class extends React.Component {
     })
     .then(response => {
       const [ page ] = response.items;
+      console.log(page);
       const _props = simplifyCfulObject(page);
-      console.log(_props)
       return _props;
     })
   }

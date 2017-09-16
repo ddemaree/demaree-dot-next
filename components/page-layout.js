@@ -9,24 +9,6 @@ import TwitterIcon from './svg/twitter-icon.svg'
 import LinkedinIcon from './svg/linkedin-icon.svg'
 import EmailIcon from './svg/email-icon.svg'
 
-import Router from 'next/router'
-Router.onRouteChangeStart = url => {
-  document.body.classList.add('app--route-pending')
-}
-Router.onRouteChangeComplete = url => {
-  console.log("Tracking url ", url)
-  gtag('config', 'UA-556801-4', {'page_path': url});
-
-  const elem = document.querySelector('.main__inner');
-  if(elem) {
-    elem.scrollTop = 0;
-    getWindowWidthOffset()
-  }
-
-  document.body.classList.remove('app--nav-open')
-  document.body.classList.remove('app--route-pending')
-}
-
 function getWindowWidthOffset(){
   if(typeof window === 'undefined') return null;
 

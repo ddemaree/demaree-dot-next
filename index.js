@@ -47,7 +47,7 @@ app.prepare()
 
   server.get('/posts/:year/:slug', (req, res) => {
     const { slug } = req.params;
-    const passedQuery = Object.assign({}, req.query, {id: slug});
+    const passedQuery = Object.assign({}, req.query, { slug });
     return app.render(req, res, '/posts', passedQuery);
   })
 

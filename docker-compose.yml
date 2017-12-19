@@ -8,4 +8,7 @@ services:
       PORT: 4000
       POSTS_API: "https://wp.demar.ee"
     volumes:
-      - ".:/home/nodejs/app"
+      - "${ROOT_PATH:-.}:/home/nodejs/app"
+      - "node-modules:/home/nodejs/app/node_modules"
+volumes:
+  node-modules:
